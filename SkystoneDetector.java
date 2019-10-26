@@ -25,17 +25,17 @@ public class SkystoneDetector {
 
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
-        parameters.vuforiaLicenseKey = VUFORIA_KEY;
-        parameters.cameraName = hardwareMap.get(WebcamNAme.class, "Webcam 1");
+/*        parameters.vuforiaLicenseKey = VUFORIA_KEY;
+        parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
 
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
 
         if(ClassFactory.getInstance().canCreateTFObjectDetector()) {
             int tfodMonitorViewId = hwMap.appContext.getResources().getIdentifier(
-                    "tfodMonitorViewId", "id", hwMap.appContext.getPackageName());
+                    "tfodMonitorViewId", "id", hwMap.appContext.getPackageName()); */
         }
 
     }
 
-}
+//}
 
