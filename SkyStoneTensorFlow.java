@@ -14,9 +14,7 @@ import java.util.List;
 
 @Disabled
 @Autonomous(name="SkyStoneTensorFlow", group="Vision Iterative Opmode")
-//@Disabled
 public class SkyStoneTensorFlow  {
-
 
     private final String TFOD_MODEL_ASSET = "Skystone.tflite";
     private final String LABEL_SKYSTONE = "Skystone";

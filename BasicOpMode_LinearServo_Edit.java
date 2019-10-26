@@ -24,12 +24,21 @@ public class BasicOpMode_LinearServo_Edit extends LinearOpMode
 
         leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
+
         armPivot = hardwareMap.get(DcMotor.class, "arm_pivot");
         arm = hardwareMap.get(CRServo.class,"claw");
 
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
         arm.setDirection(CRServo.Direction.FORWARD);
+
+        arm = hardwareMap.get(CRServo.class,"arm");
+        armPivot = hardwareMap.get(DcMotor.class, "pivot");
+
+        leftDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightDrive.setDirection(DcMotor.Direction.REVERSE);
+        arm.setDirection(CRServo.Direction.FORWARD);
+        armPivot.setDirection(DcMotor.Direction.FORWARD);
 
         waitForStart();
         runtime.reset();
@@ -54,7 +63,7 @@ public class BasicOpMode_LinearServo_Edit extends LinearOpMode
 
              leftPower  = gamepad1.left_stick_y ;
              rightPower = gamepad1.right_stick_y ;
-             armPivotPower = gamepad2.right_stick_y;
+             armPivotPower = 0.1 * gamepad2.right_stick_y ;
 
              leftDrive.setPower(leftPower);
              rightDrive.setPower(rightPower);
