@@ -17,6 +17,7 @@ public class Vision_BasicOpMode_LinearServo extends LinearOpMode
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
     private Servo arm = null;
+    private DcMotor arm_drive = null;
 
     private final static double ARM_HOME = 0.0 ;
     private final static double ARM_MIN_RANGE = 0.0;
@@ -35,6 +36,7 @@ public class Vision_BasicOpMode_LinearServo extends LinearOpMode
         leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
         arm = hardwareMap.get(Servo.class,"arm");
+        arm_drive = hardwareMap.get(DcMotor.class, "arm_drive");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
@@ -52,6 +54,7 @@ public class Vision_BasicOpMode_LinearServo extends LinearOpMode
             // Setup a variable for each drive wheel to save power level for telemetry
             double leftPower;
             double rightPower;
+            double armPower;
 
             // Choose to drive using either Tank Mode, or POV Mode
             // Comment out the method that's not used.  The default below is POV.
@@ -74,10 +77,13 @@ public class Vision_BasicOpMode_LinearServo extends LinearOpMode
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
              leftPower  = gamepad1.left_stick_y ;
              rightPower = gamepad1.right_stick_y ;
+             armPower = gamepad2.right_stick_y ;
+
 
             // Send calculated power to wheels
             leftDrive.setPower(leftPower);
             rightDrive.setPower(rightPower);
+            arm_drive.setPower(armPower);
             arm.setPosition(ARM_POSITION);
 
 
