@@ -1,29 +1,27 @@
 package org.firstinspires.ftc.teamcode;
+
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Range;
 
-@Disabled
-@TeleOp(name="Basic: Vision Linear OpModeServo", group="Vision Linear Opmode")
-
-public class Vision_BasicOpMode_LinearServo extends LinearOpMode
+@TeleOp(name="Servo OpMode Rework", group="Opmode")
+//@Disabled
+public class BasicOpMode_LinearServo_Edit extends LinearOpMode
 {
     // Declare OpMode members.
     private ElapsedTime runtime = new ElapsedTime();
-    private DcMotor left_drive = null;
-    private DcMotor right_drive = null;
-    private Servo arm = null;
-    private DcMotor arm_drive = null;
+    private DcMotor leftDrive = null;
+    private DcMotor rightDrive = null;
+    private CRServo arm = null;
+    private DcMotor armPivot = null;
 
-    private final static double ARM_HOME = 0.0 ;
-    private final static double ARM_MIN_RANGE = 0.0;
-    private final static double ARM_MAX_RANGE = 1.0;
-    private final static double ARM_SPEED = 0.3;
-    private double ARM_POSITION = 0.0;
+    private double ARM_POWER = 0;
 
     @Override
     public void runOpMode() {
@@ -33,16 +31,17 @@ public class Vision_BasicOpMode_LinearServo extends LinearOpMode
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
-        left_drive  = hardwareMap.get(DcMotor.class, "left_drive");
-        right_drive = hardwareMap.get(DcMotor.class, "right_drive");
-        arm = hardwareMap.get(Servo.class,"arm");
-        arm_drive = hardwareMap.get(DcMotor.class, "arm_drive");
+        leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
+        rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
+        arm = hardwareMap.get(CRServo.class,"arm");
+        armPivot = hardwareMap.get(DcMotor.class, "armPivot");
 
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
-        left_drive.setDirection(DcMotor.Direction.FORWARD);
-        right_drive.setDirection(DcMotor.Direction.REVERSE);
-
+        leftDrive.setDirection(DcMotor.Direction.FORWARD);
+        rightDrive.setDirection(DcMotor.Direction.REVERSE);
+        arm.setDirection(CRServo.Direction.FORWARD);
+        armPivot.setDirection(DcMotor.Direction.FORWARD);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -54,36 +53,30 @@ public class Vision_BasicOpMode_LinearServo extends LinearOpMode
             // Setup a variable for each drive wheel to save power level for telemetry
             double leftPower;
             double rightPower;
-            double armPower;
-
+            double pivotPower;
             // Choose to drive using either Tank Mode, or POV Mode
             // Comment out the method that's not used.  The default below is POV.
 
-            // POV Mode uses left stick to go forward, and right stick to turn.
-            // - This uses basic math to combine motions and is easier to drive straight.
-            //  double drive = -gamepad1.left_stick_y;
-            // double turn  =  gamepad1.right_stick_x;
-            // leftPower    = Range.clip(drive + turn, -1.0, 1.0) ;
-            //  rightPower   = Range.clip(drive - turn, -1.0, 1.0) ;
-
-            if (gamepad2.y)
-                ARM_POSITION = ARM_POSITION + ARM_SPEED;
-            else if (gamepad2.a)
-                ARM_POSITION = ARM_POSITION - ARM_SPEED;
-
+            if (gamepad2.dpad_up) {
+                ARM_POWER = 0.5;
+            }
+            else if (gamepad2.dpad_down) {
+                ARM_POWER = -0.5;
+            }
+            else {
+                ARM_POWER = 0;
+            }
 
             // Tank Mode uses one stick to control each wheel.
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
-            leftPower = gamepad1.left_stick_y ;
-            rightPower = gamepad1.right_stick_y ;
-            armPower = gamepad2.right_stick_y ;
-
-
+             leftPower  = gamepad1.left_stick_y ;
+             rightPower = gamepad1.right_stick_y ;
+            pivotPower = gamepad2.left_stick_x ;
             // Send calculated power to wheels
-            left_drive.setPower(leftPower);
-            right_drive.setPower(rightPower);
-            arm_drive.setPower(armPower);
-            arm.setPosition(ARM_POSITION);
+            leftDrive.setPower(leftPower);
+            rightDrive.setPower(rightPower);
+            arm.setPower(ARM_POWER);
+            armPivot.setPower(pivotPower);
 
 
             // Show the elapsed game time and wheel power.
