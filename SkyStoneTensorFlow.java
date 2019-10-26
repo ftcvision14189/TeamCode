@@ -12,10 +12,10 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import java.util.List;
 
-@Autonomous(name="SkyStoneTensorFlow", group="Vision Iterative Opmode")
-//@Disabled
-public class SkyStoneTensorFlow  {
 
+@Autonomous(name="SkyStoneTensorFlow", group="Vision Iterative Opmode")
+@Disabled
+public abstract class SkyStoneTensorFlow extends OpMode{
 
     private final String TFOD_MODEL_ASSET = "Skystone.tflite";
     private final String LABEL_SKYSTONE = "Skystone";

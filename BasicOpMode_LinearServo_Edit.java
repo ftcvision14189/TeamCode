@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,7 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name="Servo OpMode Rework", group="Linear Opmode")
+@TeleOp(name="Servo OpMode Rework", group="Opmode")
 //@Disabled
 public class BasicOpMode_LinearServo_Edit extends LinearOpMode
 {
@@ -18,6 +19,7 @@ public class BasicOpMode_LinearServo_Edit extends LinearOpMode
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
     private CRServo arm = null;
+    private DcMotor pivot = null;
 
     private double ARM_POWER = 0;
 
@@ -32,13 +34,13 @@ public class BasicOpMode_LinearServo_Edit extends LinearOpMode
         leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
         rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
         arm = hardwareMap.get(CRServo.class,"arm");
-
+        pivot = hardwareMap.get(DcMotor.class, "pivot");
         // Most robots need the motor on one side to be reversed to drive forward
         // Reverse the motor that runs backwards when connected directly to the battery
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
         arm.setDirection(CRServo.Direction.FORWARD);
-
+        pivot.setDirection(DcMotor.Direction.FORWARD);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -50,7 +52,7 @@ public class BasicOpMode_LinearServo_Edit extends LinearOpMode
             // Setup a variable for each drive wheel to save power level for telemetry
             double leftPower;
             double rightPower;
-
+            double pivotPower;
             // Choose to drive using either Tank Mode, or POV Mode
             // Comment out the method that's not used.  The default below is POV.
 
@@ -76,11 +78,12 @@ public class BasicOpMode_LinearServo_Edit extends LinearOpMode
             // - This requires no math, but it is hard to drive forward slowly and keep straight.
              leftPower  = gamepad1.left_stick_y ;
              rightPower = gamepad1.right_stick_y ;
-
+            pivotPower = gamepad2.left_stick_x ;
             // Send calculated power to wheels
             leftDrive.setPower(leftPower);
             rightDrive.setPower(rightPower);
             arm.setPower(ARM_POWER);
+            pivot.setPower(pivotPower);
 
 
             // Show the elapsed game time and wheel power.
