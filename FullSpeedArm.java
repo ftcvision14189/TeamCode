@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name="OpMode Static Arm", group="Linear Opmode")
-public class BasicOpMode_LinearServo_Edit extends LinearOpMode
+@TeleOp(name="Catapult", group="Linear Opmode")
+public class FullSpeedArm extends LinearOpMode
 {
 
     @Override
@@ -17,8 +17,6 @@ public class BasicOpMode_LinearServo_Edit extends LinearOpMode
         DcMotor rightDrive;
         DcMotor armPivot;
         CRServo claw;
-        boolean was_a_pressed = false;
-        boolean slow_mode = false;
         double CLAW_SERVO_POWER = 0.5;
 
         telemetry.addData("Status", "Initialized");
@@ -55,42 +53,19 @@ public class BasicOpMode_LinearServo_Edit extends LinearOpMode
                 clawPower = 0;
             }
 
-            // toggle slow mode when A is pressed
-            if (gamepad1.a) {
-                if (!was_a_pressed) {
-                    if (!slow_mode) {
-                        slow_mode = true;
-                    }
-                    else {
-                        slow_mode = false;
-                    }
-                }
-                was_a_pressed = true;
-            }
-            else {
-                was_a_pressed = false;
-            }
+             leftPower  = gamepad1.left_stick_y ;
+             rightPower = gamepad1.right_stick_y ;
+             armPivotPower = gamepad2.right_stick_y ;
 
-            // Decrease drivetrain speed if slowmode is on
-            if (slow_mode) {
-                leftPower = 0.5 * gamepad1.left_stick_y;
-                rightPower = 0.5 * gamepad1.right_stick_y;
-            }
-            else {
-                leftPower = gamepad1.left_stick_y;
-                rightPower = gamepad1.right_stick_y;
-            }
-            armPivotPower = 0.3 * gamepad2.right_stick_y ;
+             leftDrive.setPower(leftPower);
+             rightDrive.setPower(rightPower);
+             armPivot.setPower(armPivotPower);
+             claw.setPower(clawPower);
 
-            leftDrive.setPower(leftPower);
-            rightDrive.setPower(rightPower);
-            armPivot.setPower(armPivotPower);
-            claw.setPower(clawPower);
-
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Drivetrain", "left (%.2f), right (%.2f), slowmode (%b)", leftPower, rightPower, slow_mode);
-            telemetry.addData("Arm", "pivot (%.2f), claw (%.2f)", armPivotPower, clawPower);
-            telemetry.update();
+             telemetry.addData("Status", "Run Time: " + runtime.toString());
+             telemetry.addData("Drivetrain", "left (%.2f), right (%.2f)", leftPower, rightPower);
+             telemetry.addData("Arm", "pivot (%.2f), claw (%.2f)", armPivotPower, clawPower);
+             telemetry.update();
         }
     }
 }
