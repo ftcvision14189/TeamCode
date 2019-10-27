@@ -16,7 +16,7 @@ public class BasicOpMode_LinearServo_Edit extends LinearOpMode
         DcMotor leftDrive;
         DcMotor rightDrive;
         DcMotor armPivot;
-        CRServo arm;
+        CRServo claw;
         double CLAW_SERVO_POWER = 0.5;
 
         telemetry.addData("Status", "Initialized");
@@ -26,18 +26,11 @@ public class BasicOpMode_LinearServo_Edit extends LinearOpMode
         rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
 
         armPivot = hardwareMap.get(DcMotor.class, "arm_pivot");
-        arm = hardwareMap.get(CRServo.class,"claw");
+        claw = hardwareMap.get(CRServo.class,"claw");
 
         leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
-        arm.setDirection(CRServo.Direction.FORWARD);
-
-        arm = hardwareMap.get(CRServo.class,"arm");
-        armPivot = hardwareMap.get(DcMotor.class, "pivot");
-
-        leftDrive.setDirection(DcMotor.Direction.FORWARD);
-        rightDrive.setDirection(DcMotor.Direction.REVERSE);
-        arm.setDirection(CRServo.Direction.FORWARD);
+        claw.setDirection(CRServo.Direction.FORWARD);
         armPivot.setDirection(DcMotor.Direction.FORWARD);
 
         waitForStart();
@@ -60,15 +53,14 @@ public class BasicOpMode_LinearServo_Edit extends LinearOpMode
                 clawPower = 0;
             }
 
-
              leftPower  = gamepad1.left_stick_y ;
              rightPower = gamepad1.right_stick_y ;
-             armPivotPower = 0.1 * gamepad2.right_stick_y ;
+             armPivotPower = 0.3 * gamepad2.right_stick_y ;
 
              leftDrive.setPower(leftPower);
              rightDrive.setPower(rightPower);
              armPivot.setPower(armPivotPower);
-             arm.setPower(clawPower);
+             claw.setPower(clawPower);
 
              telemetry.addData("Status", "Run Time: " + runtime.toString());
              telemetry.addData("Drivetrain", "left (%.2f), right (%.2f)", leftPower, rightPower);
