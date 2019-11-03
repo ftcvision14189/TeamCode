@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @Disabled
 @Autonomous(name="SkyStoneTensorFlow", group="Vision Iterative Opmode")
-public class SkyStoneTensorFlow  {
+public class SkyStoneTensorFlow {
 
     private final String TFOD_MODEL_ASSET = "Skystone.tflite";
     private final String LABEL_SKYSTONE = "Skystone";
