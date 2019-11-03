@@ -16,7 +16,8 @@ public class AutoPark extends LinearOpMode
         DcMotor leftDrive = hardwareMap.dcMotor.get("left_drive");
         DcMotor rightDrive = hardwareMap.dcMotor.get("right_drive");
         CRServo claw = hardwareMap.crservo.get("claw");
-        DcMotor armPivot = hardwareMap.dcMotor.get("arm_pivot");
+        DcMotor leftArmPivot = hardwareMap.dcMotor.get("arm_pivot_left");
+        DcMotor rightArmPivot = hardwareMap.dcMotor.get("arm_pivot_right");
 
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
 
@@ -32,7 +33,8 @@ public class AutoPark extends LinearOpMode
         leftDrive.setPower(0.25);
         rightDrive.setPower(0.25);
         claw.setPower(0.0);
-        armPivot.setPower(0.0);
+        leftArmPivot.setPower(0.0);
+        rightArmPivot.setPower((0.0));
 
         sleep(2000);
 

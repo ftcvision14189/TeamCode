@@ -13,27 +13,21 @@ public class BasicOpMode_LinearServo_Edit extends LinearOpMode
     @Override
     public void runOpMode() {
         ElapsedTime runtime = new ElapsedTime();
-        DcMotor leftDrive;
-        DcMotor rightDrive;
-        DcMotor armPivot;
-        CRServo claw;
+        DcMotor leftDrive = hardwareMap.dcMotor.get("left_drive");
+        DcMotor rightDrive = hardwareMap.dcMotor.get("right_drive");
+        DcMotor leftArmPivot = hardwareMap.dcMotor.get("arm_pivot_left");
+        DcMotor rightArmPivot = hardwareMap.dcMotor.get("arm_pivot_right");
+        CRServo claw = hardwareMap.crservo.get("claw");
         boolean was_a_pressed = false;
         boolean slow_mode = false;
         double CLAW_SERVO_POWER = 0.5;
+        double PIVOT_POWER = 0.3;
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
-        leftDrive  = hardwareMap.get(DcMotor.class, "left_drive");
-        rightDrive = hardwareMap.get(DcMotor.class, "right_drive");
-
-        armPivot = hardwareMap.get(DcMotor.class, "arm_pivot");
-        claw = hardwareMap.get(CRServo.class,"claw");
-
-        leftDrive.setDirection(DcMotor.Direction.FORWARD);
         rightDrive.setDirection(DcMotor.Direction.REVERSE);
-        claw.setDirection(CRServo.Direction.FORWARD);
-        armPivot.setDirection(DcMotor.Direction.FORWARD);
+        rightArmPivot.setDirection(DcMotor.Direction.REVERSE);
 
         waitForStart();
         runtime.reset();
@@ -80,16 +74,16 @@ public class BasicOpMode_LinearServo_Edit extends LinearOpMode
                 leftPower = gamepad1.left_stick_y;
                 rightPower = gamepad1.right_stick_y;
             }
-            armPivotPower = 0.3 * gamepad2.right_stick_y ;
+            armPivotPower = PIVOT_POWER * gamepad2.right_stick_y;
 
             leftDrive.setPower(leftPower);
             rightDrive.setPower(rightPower);
-            armPivot.setPower(armPivotPower);
+            leftArmPivot.setPower(armPivotPower);
             claw.setPower(clawPower);
 
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Drivetrain", "left (%.2f), right (%.2f), slowmode (%b)", leftPower, rightPower, slow_mode);
-            telemetry.addData("Arm", "pivot (%.2f), claw (%.2f)", armPivotPower, clawPower);
+            telemetry.addData("Arm", "left pivot (%.2f), right pivot ($.2f), claw (%.2f)", leftArmPivot.getPower(), rightArmPivot.getPower(), clawPower);
             telemetry.update();
         }
     }
