@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -18,6 +18,8 @@ public class AutoPark extends LinearOpMode
 {
     private DcMotor leftDrive = null;
     private DcMotor rightDrive = null;
+    private CRServo claw = null;
+    private DcMotor armPivot = null;
 
     // called when init button is  pressed.
 
@@ -26,6 +28,8 @@ public class AutoPark extends LinearOpMode
     {
         leftDrive = hardwareMap.dcMotor.get("left_drive");
         rightDrive = hardwareMap.dcMotor.get("right_drive");
+        claw = hardwareMap.crservo.get("claw");
+        armPivot = hardwareMap.dcMotor.get("arm_pivot");
 
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
 
@@ -43,6 +47,8 @@ public class AutoPark extends LinearOpMode
 
         leftDrive.setPower(0.25);
         rightDrive.setPower(0.25);
+        claw.setPower(0.0);
+        armPivot.setPower(0.0);
 
         sleep(2000);        // wait for 2 seconds.
 
