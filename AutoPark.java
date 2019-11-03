@@ -16,18 +16,18 @@ import com.qualcomm.robotcore.util.Range;
 //@Disabled
 public class AutoPark extends LinearOpMode
 {
-    private DcMotor leftMotor = null;
-    private DcMotor rightMotor = null;
+    private DcMotor leftDrive = null;
+    private DcMotor rightDrive = null;
 
     // called when init button is  pressed.
 
     @Override
     public void runOpMode() throws InterruptedException
     {
-        leftMotor = hardwareMap.dcMotor.get("left_motor");
-        rightMotor = hardwareMap.dcMotor.get("right_motor");
+        leftDrive = hardwareMap.dcMotor.get("left_drive");
+        rightDrive = hardwareMap.dcMotor.get("right_drive");
 
-        leftMotor.setDirection(DcMotor.Direction.REVERSE);
+        leftDrive.setDirection(DcMotor.Direction.REVERSE);
 
         telemetry.addData("Mode", "waiting");
         telemetry.update();
@@ -41,12 +41,12 @@ public class AutoPark extends LinearOpMode
 
         // set both motors to 25% power.
 
-        leftMotor.setPower(0.25);
-        rightMotor.setPower(0.25);
+        leftDrive.setPower(0.25);
+        rightDrive.setPower(0.25);
 
         sleep(2000);        // wait for 2 seconds.
 
-        leftMotor.setPower(0.0);
-        rightMotor.setPower(0.0);
+        leftDrive.setPower(0.0);
+        rightDrive.setPower(0.0);
     }
 }
