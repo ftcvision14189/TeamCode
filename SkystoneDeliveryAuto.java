@@ -17,7 +17,6 @@ public class SkystoneDeliveryAuto extends LinearOpMode {
     private static final String VUFORIA_KEY = "AfKn1r7/////AAABmWYJKR8IEUVuvhd1CRaKnow6zzuk0sRb17iqxYCGooYanQKgP4a1bRlsj1ITJaNFgwZUgQ7DDIdTaLtrMUVoLYgZVL4a2AwuDWFUSCKDeh8aRj47751pt6FH/Za3PcdZxEUsSbrwlt/kGmJjULFctVYZk71/PhChEfbeEpk0sFUQqutbxSnZPObYhF6NzliuZQ512oAtCsI/VKP7ctDl6ySRF8DO+1RBDwE9vvN4NlUeDf+wgFwhoEtZ+dRef8TPLXGDC8xHMFRTrsZhTfl7DLGQjkLCVOx40RtUqcFNOl46qgtM5liNuEAE6NcE+/096Q3Q5wqpIBOyimHFa9DeOIAOo8IyD7dD6amjAXtBJsl2";
 
     private VuforiaLocalizer vuforia;
-
     private TFObjectDetector tfod;
 
     @Override
