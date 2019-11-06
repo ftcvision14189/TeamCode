@@ -51,5 +51,8 @@ public class AutoParkRight extends LinearOpMode
         rightDrive.setPower(0.25);
 
         sleep(1000);
+
+        leftDrive.setPower(0.0);
+        rightDrive.setPower(0.0);
     }
 }

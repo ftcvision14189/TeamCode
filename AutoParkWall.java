@@ -30,13 +30,16 @@ public class AutoParkWall extends LinearOpMode
         telemetry.addData("Mode", "running");
         telemetry.update();
 
-        leftDrive.setPower(0.25);
-        rightDrive.setPower(0.25);
+        //rest unused motors
         claw.setPower(0.0);
         leftArmPivot.setPower(0.0);
         rightArmPivot.setPower((0.0));
 
-        sleep(2000);
+        //Go forward to park on tape
+        leftDrive.setPower(0.25);
+        rightDrive.setPower(0.25);
+
+        sleep(1000);
 
         leftDrive.setPower(0.0);
         rightDrive.setPower(0.0);
