@@ -13,7 +13,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import java.util.List;
 
 @Autonomous(name="SkyStoneTensorFlow", group="Vision Iterative Opmode")
-//@Disabled
+@Disabled
 public class SkyStoneTensorFlow  {
 
 
