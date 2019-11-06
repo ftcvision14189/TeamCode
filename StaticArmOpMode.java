@@ -7,9 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="OpMode Static Arm", group="Linear Opmode")
-public class BasicOpMode_LinearServo_Edit extends LinearOpMode
-{
-
+public class StaticArmOpMode extends LinearOpMode {
     @Override
     public void runOpMode() {
         ElapsedTime runtime = new ElapsedTime();
@@ -52,12 +50,7 @@ public class BasicOpMode_LinearServo_Edit extends LinearOpMode
             // toggle slow mode when A is pressed
             if (gamepad1.a) {
                 if (!was_a_pressed) {
-                    if (!slow_mode) {
-                        slow_mode = true;
-                    }
-                    else {
-                        slow_mode = false;
-                    }
+                    slow_mode = !slow_mode;
                 }
                 was_a_pressed = true;
             }
