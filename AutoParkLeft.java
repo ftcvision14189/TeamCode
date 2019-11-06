@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 
 
 @Autonomous(name="Drive Forward", group="Auto")
-public class AutoPark extends LinearOpMode
+public class AutoParkLeft extends LinearOpMode
 {
     @Override
     public void runOpMode() throws InterruptedException
@@ -30,15 +30,27 @@ public class AutoPark extends LinearOpMode
         telemetry.addData("Mode", "running");
         telemetry.update();
 
-        leftDrive.setPower(0.25);
-        rightDrive.setPower(0.25);
+        // rest unused motors
         claw.setPower(0.0);
         leftArmPivot.setPower(0.0);
         rightArmPivot.setPower((0.0));
 
+        //move forward for 2 seconds
+        leftDrive.setPower(0.25);
+        rightDrive.setPower(0.25);
+
         sleep(2000);
 
+        //turn to the right
         leftDrive.setPower(0.0);
-        rightDrive.setPower(0.0);
+        rightDrive.setPower(0.25);
+
+        sleep(1000);
+
+        //go forward to park on line
+        leftDrive.setPower(0.25);
+        rightDrive.setPower(0.25);
+
+        sleep(1000);
     }
 }
