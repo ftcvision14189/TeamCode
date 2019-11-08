@@ -19,7 +19,7 @@ public class StaticArmOpMode extends LinearOpMode {
         boolean was_a_pressed = false;
         boolean slow_mode = false;
         double CLAW_SERVO_POWER = 0.5;
-        double PIVOT_POWER = 0.3;
+        double PIVOT_POWER = 0.4;
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
