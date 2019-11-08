@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.Range;
 
 
 @TeleOp(name="Basic: Vision Linear OpModeServo", group="Vision Linear Opmode")
-@Disabled
+//@Disabled
 public class Vision_BasicOpMode_LinearServo extends LinearOpMode
 {
     // Declare OpMode members.
