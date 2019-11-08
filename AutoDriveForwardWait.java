@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
-@Autonomous(name="DriveForward", group="Auto")
-public class AutoDriveForward extends LinearOpMode
+@Autonomous(name="WaitDriveForward", group="Auto")
+public class AutoDriveForwardWait extends LinearOpMode
 
 {
     @Override
@@ -35,6 +35,8 @@ public class AutoDriveForward extends LinearOpMode
         claw.setPosition(90);
         leftArmPivot.setPower(0.0);
         rightArmPivot.setPower((0.0));
+
+        sleep(20000);
 
         //Go forward to park on tape
         leftDrive.setPower(0.5);
