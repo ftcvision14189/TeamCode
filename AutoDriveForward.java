@@ -4,18 +4,18 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.Servo;
 
 
-@Autonomous(name="Drive Forward", group="Auto")
-public class AutoParkWall extends LinearOpMode
+@Autonomous(name="DriveForward", group="Auto")
+public class AutoDriveForward extends LinearOpMode
 {
     @Override
     public void runOpMode() throws InterruptedException
     {
         DcMotor leftDrive = hardwareMap.dcMotor.get("left_drive");
         DcMotor rightDrive = hardwareMap.dcMotor.get("right_drive");
-        CRServo claw = hardwareMap.crservo.get("claw");
+        Servo claw = hardwareMap.servo.get("claw");
         DcMotor leftArmPivot = hardwareMap.dcMotor.get("arm_pivot_left");
         DcMotor rightArmPivot = hardwareMap.dcMotor.get("arm_pivot_right");
 
@@ -31,7 +31,7 @@ public class AutoParkWall extends LinearOpMode
         telemetry.update();
 
         //rest unused motors
-        claw.setPower(0.0);
+        claw.setPosition(0.0);
         leftArmPivot.setPower(0.0);
         rightArmPivot.setPower((0.0));
 
