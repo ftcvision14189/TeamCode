@@ -72,6 +72,7 @@ public class StaticArmOpMode extends LinearOpMode {
             leftDrive.setPower(leftPower);
             rightDrive.setPower(rightPower);
             leftArmPivot.setPower(armPivotPower);
+            rightArmPivot.setPower(armPivotPower);
             claw.setPower(clawPower);
 
             telemetry.addData("Status", "Run Time: " + runtime.toString());

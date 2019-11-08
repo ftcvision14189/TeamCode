@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.CRServo;
 
 
-@Autonomous(name="Drive Forward", group="Auto")
+@Autonomous(name="AutoParkRight", group="Auto")
 public class AutoParkRight extends LinearOpMode
 {
     @Override
