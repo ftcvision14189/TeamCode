@@ -2,8 +2,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="OpMode Static Arm", group="Linear Opmode")
@@ -15,10 +15,10 @@ public class StaticArmOpMode extends LinearOpMode {
         DcMotor rightDrive = hardwareMap.dcMotor.get("right_drive");
         DcMotor leftArmPivot = hardwareMap.dcMotor.get("arm_pivot_left");
         DcMotor rightArmPivot = hardwareMap.dcMotor.get("arm_pivot_right");
-        CRServo claw = hardwareMap.crservo.get("claw");
-        boolean was_a_pressed = false;
+        Servo claw = hardwareMap.servo.get("claw");
+        boolean was_slowmode_pressed = false;
+        boolean claw_open = false;
         boolean slow_mode = false;
-        double CLAW_SERVO_POWER = 0.5;
         double PIVOT_POWER = 0.4;
 
         telemetry.addData("Status", "Initialized");
@@ -35,27 +35,26 @@ public class StaticArmOpMode extends LinearOpMode {
             double leftPower;
             double rightPower;
             double armPivotPower;
-            double clawPower;
-
-            if (gamepad2.dpad_up) {
-                clawPower = CLAW_SERVO_POWER;
-            }
-            else if (gamepad2.dpad_down) {
-                clawPower = -CLAW_SERVO_POWER;
-            }
-            else {
-                clawPower = 0;
-            }
 
             // toggle slow mode when A is pressed
             if (gamepad1.a) {
-                if (!was_a_pressed) {
+                if (!was_slowmode_pressed) {
                     slow_mode = !slow_mode;
                 }
-                was_a_pressed = true;
+                was_slowmode_pressed = true;
             }
             else {
-                was_a_pressed = false;
+                was_slowmode_pressed = false;
+            }
+
+            // toggle claw position when A/Y is pressed
+            if ((gamepad2.a) && (claw_open)) {
+                    claw_open = false;
+                    claw.setPosition(90);
+            }
+            else if ((gamepad2.y) && (!claw_open)) {
+                    claw_open = true;
+                    claw.setPosition(0);
             }
 
             // Decrease drivetrain speed if slowmode is on
@@ -73,11 +72,11 @@ public class StaticArmOpMode extends LinearOpMode {
             rightDrive.setPower(rightPower);
             leftArmPivot.setPower(armPivotPower);
             rightArmPivot.setPower(armPivotPower);
-            claw.setPower(clawPower);
 
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("Drivetrain", "left (%.2f), right (%.2f), slowmode (%b)", leftPower, rightPower, slow_mode);
-            telemetry.addData("Arm", "left pivot (%.2f), right pivot ($.2f), claw (%.2f)", leftArmPivot.getPower(), rightArmPivot.getPower(), clawPower);
+            telemetry.addData("Arm", "left pivot (%.2f), right pivot ($.2f)", leftArmPivot.getPower(), rightArmPivot.getPower());
+            telemetry.addData("Claw", "open (%b), position (%.2f)", claw_open, claw.getPosition());
             telemetry.update();
         }
     }
