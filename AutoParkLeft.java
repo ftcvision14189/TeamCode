@@ -39,7 +39,7 @@ public class AutoParkLeft extends LinearOpMode
         leftDrive.setPower(0.25);
         rightDrive.setPower(0.25);
 
-        sleep(2000);
+        sleep(1600);
 
         //turn to the right
         leftDrive.setPower(0.0);
@@ -51,7 +51,7 @@ public class AutoParkLeft extends LinearOpMode
         leftDrive.setPower(0.25);
         rightDrive.setPower(0.25);
 
-        sleep(1000);
+        sleep(600);
 
         leftDrive.setPower(0.0);
         rightDrive.setPower(0.0);
