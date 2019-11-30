@@ -22,7 +22,7 @@ public class Vision_BasicOpMode_LinearServo extends LinearOpMode
     private final static double ARM_HOME = 0.0 ;
     private final static double ARM_MIN_RANGE = 0.0;
     private final static double ARM_MAX_RANGE = 1.0;
-    private final static double ARM_SPEED = 0.3;
+    private final static double ARM_SPEED = 0.1;
     private double ARM_POSITION = 0.0;
 
     @Override
