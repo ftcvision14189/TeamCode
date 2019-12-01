@@ -50,7 +50,7 @@ public class StaticArmOpMode extends LinearOpMode {
             // toggle claw position when A/Y is pressed
             if ((gamepad2.a) && (claw_open)) {
                     claw_open = false;
-                    claw.setPosition(90);
+                    claw.setPosition(100);
             }
             else if ((gamepad2.y) && (!claw_open)) {
                     claw_open = true;
@@ -67,6 +67,7 @@ public class StaticArmOpMode extends LinearOpMode {
                 rightPower = gamepad1.right_stick_y;
             }
             armPivotPower = PIVOT_POWER * gamepad2.right_stick_y;
+
 
             leftDrive.setPower(leftPower);
             rightDrive.setPower(rightPower);
