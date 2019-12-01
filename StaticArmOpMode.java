@@ -7,15 +7,34 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name="OpMode Static Arm", group="Linear Opmode")
+
 public class StaticArmOpMode extends LinearOpMode {
+    private Servo leftServo = null;
+    private Servo rightServo = null;
+
     @Override
     public void runOpMode() {
+
         ElapsedTime runtime = new ElapsedTime();
         DcMotor leftDrive = hardwareMap.dcMotor.get("left_drive");
         DcMotor rightDrive = hardwareMap.dcMotor.get("right_drive");
         DcMotor leftArmPivot = hardwareMap.dcMotor.get("arm_pivot_left");
         DcMotor rightArmPivot = hardwareMap.dcMotor.get("arm_pivot_right");
         Servo claw = hardwareMap.servo.get("claw");
+        leftServo = hardwareMap.servo.get("leftServo");
+        rightServo = hardwareMap.servo.get("rightServo");
+
+        double leftServo_HOME = 0.0;
+        double leftServo_MIN_RANGE = 0.0;
+        double leftServo_MAX_RANGE = 1.0;
+        double leftServo_SPEED = 0.1;
+        double leftServo_POSITION = 0.0;
+
+        double rightServo_HOME = 0.0;
+        double rightServo_MIN_RANGE = 0.0;
+        double rightServo_MAX_RANGE = 1.0;
+        double rightServo_SPEED = 0.1;
+        double rightServo_POSITION = 0.0;
         boolean was_slowmode_pressed = false;
         boolean claw_open = false;
         boolean slow_mode = false;
@@ -57,6 +76,14 @@ public class StaticArmOpMode extends LinearOpMode {
                     claw.setPosition(0);
             }
 
+            if ((gamepad1.a) && (claw_open)) {
+                claw_open = false;
+                claw.setPosition(90);
+            }
+            else if ((gamepad1.y) && (!claw_open)) {
+                claw_open = true;
+                claw.setPosition(0);
+            }
             // Decrease drivetrain speed if slowmode is on
             if (slow_mode) {
                 leftPower = 0.5 * gamepad1.left_stick_y;
@@ -66,7 +93,11 @@ public class StaticArmOpMode extends LinearOpMode {
                 leftPower = gamepad1.left_stick_y;
                 rightPower = gamepad1.right_stick_y;
             }
+
+
             armPivotPower = PIVOT_POWER * gamepad2.right_stick_y;
+
+
 
             leftDrive.setPower(leftPower);
             rightDrive.setPower(rightPower);
