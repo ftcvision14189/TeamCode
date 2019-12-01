@@ -74,6 +74,8 @@ public class SkyStoneTensorFlow{
                 if(recognition.getLabel().equals(LABEL_SKYSTONE)) {
                     stoneLocation = (recognition.getLeft() + recognition.getRight()) / 2;
                     isStoneDetected = true;
+
+
                 }
                 else isStoneDetected = false;
             }
