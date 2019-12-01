@@ -30,16 +30,18 @@
 
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import java.util.List;
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 /**
  * This 2019-2020 OpMode illustrates the basics of using the TensorFlow Object Detection API to
@@ -51,45 +53,75 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
  * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
  * is explained below.
  */
-@TeleOp(name = "Concept: TensorFlow Object Detection Webcam", group = "Concept")
+@Autonomous(name = "Object Detection Webcam", group = "Concept")
 //@Disabled
-public class Vision_ConceptTensorFlowObjectDetectionWebcam1 extends LinearOpMode {
+public class Vision_ConceptTensorFlowObjectDetectionWebcam1 extends LinearOpMode
+{
+    DcMotor leftMotor;
+    DcMotor rightMotor;
+    Servo leftServo = null;
+    Servo rightServo = null;
+
     private static final String TFOD_MODEL_ASSET = "Skystone.tflite";
     private static final String LABEL_FIRST_ELEMENT = "Stone";
     private static final String LABEL_SECOND_ELEMENT = "Skystone";
-
-    /*
-     * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
-     * 'parameters.vuforiaLicenseKey' is initialized is for illustration only, and will not function.
-     * A Vuforia 'Development' license key, can be obtained free of charge from the Vuforia developer
-     * web site at https://developer.vuforia.com/license-manager.
-     *
-     * Vuforia license keys are always 380 characters long, and look as if they contain mostly
-     * random data. As an example, here is a example of a fragment of a valid key:
-     *      ... yIgIzTqZ4mWjk9wd3cZO9T1axEqzuhxoGlfOOI2dRzKS4T0hQ8kT ...
-     * Once you've obtained a license key, copy the string from the Vuforia web site
-     * and paste it in to your code on the next line, between the double quotes.
-     */
     private static final String VUFORIA_KEY =
             "\u000BAX0izzj/////AAABmVgryeGlbUKks9dMznAo70xgFtGB7Wf3e2Z2K22yhzmjQm6jgNG5UPMmlm7W6hmaQrMYRGeDeAzdz" +
                     "7duhjFD81BoU0BhNyuJm6r2uDa/xJSfCZstPdmi2kgN7BS8lOViax7sXaWO6/2hl1de3u5/nXQv+EYuwE4gbN3zvodRrKNjdwcJ3g" +
                     "7rgJbsh2zzi0UZsULVscwyFOOI5paqcaToG026eSAc2AHK9Mbv+6NesBprHhZTOGKpSAcS8zR3l4xfP0Kx8FiwERSe" +
                     "+lcLqVWaLQje2C/JACW2l8tv9Mib6xhd8pQodBOFrvqkVphATu0zxOEINJyIh6ZRWbgErHwUt/J3zetStCkIKhA5+Ut6bcdO\n";
-
-    /**
-     * {@link #vuforia} is the variable we will use to store our instance of the Vuforia
-     * localization engine.
-     */
     private VuforiaLocalizer vuforia;
+    private TFObjectDetector tfod;
 
     /**
      * {@link #tfod} is the variable we will use to store our instance of the TensorFlow Object
      * Detection engine.
      */
-    private TFObjectDetector tfod;
+
 
     @Override
     public void runOpMode() {
+
+        initVuforia();
+
+        if (ClassFactory.getInstance().canCreateTFObjectDetector()) {
+            initTfod();
+        } else {
+            telemetry.addData("Sorry!", "This device is not compatible with TFOD");
+        }
+
+        /**
+         * Activate TensorFlow Object Detection before we wait for the start command.
+         * Do it here so that the Camera Stream window will have the TensorFlow annotations visible.
+         **/
+        if (tfod != null) {
+            tfod.activate();
+        }
+
+        leftMotor = hardwareMap.dcMotor.get("left_drive");
+        rightMotor = hardwareMap.dcMotor.get("right_drive");
+        leftServo = hardwareMap.servo.get("leftServo");
+        rightServo = hardwareMap.servo.get("rightServo");
+
+        /** Wait for the game to begin */
+        telemetry.addData(">", "Press Play to start op mode");
+        telemetry.update();
+        waitForStart();
+
+        //rightMotor.setDirection(DcMotor.Direction.REVERSE);
+        leftMotor.setDirection(DcMotor.Direction.FORWARD);
+        leftMotor.setDirection(DcMotor.Direction.REVERSE);
+
+        telemetry.addData("Mode", "waiting");
+        telemetry.update();
+
+        // wait for start button.
+
+        waitForStart();
+
+        telemetry.addData("Mode", "running");
+        telemetry.update();
+
         // The TFObjectDetector uses the camera frames from the VuforiaLocalizer, so we create that
         // first.
         initVuforia();
@@ -127,8 +159,14 @@ public class Vision_ConceptTensorFlowObjectDetectionWebcam1 extends LinearOpMode
                             telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
                             telemetry.addData(String.format("left,top (%d)", i), "%.03f , %.03f",
                                     recognition.getLeft(), recognition.getTop());
+                            leftMotor.setPower(0.25);
+                            rightMotor.setPower(0.75);
+                            sleep(700);
                             telemetry.addData(String.format("right,bottom (%d)", i), "%.03f , %.03f",
                                     recognition.getRight(), recognition.getBottom());
+                            leftMotor.setPower(0.75);
+                            rightMotor.setPower(0.25);
+                            sleep(700);
                         }
                         telemetry.update();
                     }
@@ -151,7 +189,7 @@ public class Vision_ConceptTensorFlowObjectDetectionWebcam1 extends LinearOpMode
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
-        parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam 1");
+        parameters.cameraName = hardwareMap.get(WebcamName.class, "Webcam1");
 
         //  Instantiate the Vuforia engine
         vuforia = ClassFactory.getInstance().createVuforia(parameters);

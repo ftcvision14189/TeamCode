@@ -7,9 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
-@Autonomous(name="DriveForward", group="Auto")
-public class AutoDriveForward extends LinearOpMode
-
+@Autonomous(name="Drive Forward", group="Auto")
+public class AutoPark extends LinearOpMode
 {
     @Override
     public void runOpMode() throws InterruptedException
@@ -31,21 +30,15 @@ public class AutoDriveForward extends LinearOpMode
         telemetry.addData("Mode", "running");
         telemetry.update();
 
-        //rest unused motors
-        claw.setPosition(90);
+        leftDrive.setPower(0.25);
+        rightDrive.setPower(0.25);
+        claw.setPosition(0.0);
         leftArmPivot.setPower(0.0);
         rightArmPivot.setPower((0.0));
 
-        sleep(20000);
-
-        //Go forward to park on tape
-        leftDrive.setPower(0.5);
-        rightDrive.setPower(0.5);
-
-        sleep(1500);
+        sleep(2000);
 
         leftDrive.setPower(0.0);
         rightDrive.setPower(0.0);
-
     }
 }

@@ -15,7 +15,9 @@ import java.util.List;
 
 @Disabled
 @Autonomous(name="SkyStoneTensorFlow", group="Vision Iterative Opmode")
-public class SkyStoneTensorFlow {
+
+//@Disabled
+public class SkyStoneTensorFlow{
 
     private final String TFOD_MODEL_ASSET = "Skystone.tflite";
     private final String LABEL_SKYSTONE = "Skystone";
@@ -72,6 +74,8 @@ public class SkyStoneTensorFlow {
                 if(recognition.getLabel().equals(LABEL_SKYSTONE)) {
                     stoneLocation = (recognition.getLeft() + recognition.getRight()) / 2;
                     isStoneDetected = true;
+
+
                 }
                 else isStoneDetected = false;
             }
