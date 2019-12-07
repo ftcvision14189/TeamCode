@@ -50,38 +50,35 @@ import com.qualcomm.robotcore.hardware.Servo;
 
             // set both motors to 25% power.
 
-          /*  leftMotor.setPower(0.75);
-            rightMotor.setPower(0.75);
+            leftMotor.setPower(0.25);
+            rightMotor.setPower(0.25);
+            sleep(800);
+
+          /*  leftMotor.setPower(0);
+            rightMotor.setPower(-0.75);
+            sleep(1500);  */
+
             sleep(1000);
 
-            leftMotor.setPower(1);
-            rightMotor.setPower(0.25);
-            sleep(1500);  */
+          /*   leftMotor.setPower(0);
+            rightMotor.setPower(0.75);
+            sleep(1500);
+
+           leftMotor.setPower(0.5);
+            rightMotor.setPower(0.5);
+            sleep(1000);   */
 
             sleep(600);
             leftServo.setPosition(-0.2);
             rightServo.setPosition(0.7);
             sleep(600);
 
-            leftMotor.setPower(0.5);
-            rightMotor.setPower(0.5);
-            sleep(1000);
-
             leftServo.setPosition(0.7);
             rightServo.setPosition(-0.8);
             sleep(1000);
-
-            leftMotor.setPower(-0.25);
+         /*    leftMotor.setPower(-0.25);
             rightMotor.setPower(-0.75);
-            sleep(1000);
-
-         /*   leftMotor.setPower(-0.75);
-            rightMotor.setPower(-0.25);
-            sleep(3000);
-
-            leftMotor.setPower(0.75);
-            rightMotor.setPower(0.75);
-            sleep(1500);
+            sleep(1000)
 
             leftServo.setPosition(0.0);
             rightServo.setPosition(0.0);
@@ -92,4 +89,4 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
         }
-    }
+  }
