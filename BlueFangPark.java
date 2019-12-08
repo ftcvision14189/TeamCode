@@ -78,8 +78,8 @@ public class BlueFangPark extends LinearOpMode {
         rightMotor.setPower(0.0);
         sleep(300);
 
-        leftMotor.setPower(1);
-        rightMotor.setPower(-1);
+        leftMotor.setPower(-1);
+        rightMotor.setPower(1);
         sleep(4000);
 
         leftMotor.setPower(0.0);
