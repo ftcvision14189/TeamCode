@@ -17,7 +17,6 @@ import java.util.List;
 @Disabled
 @TeleOp(name="SkyStoneTensorFlow", group="Vision Iterative Opmode")
 
-//@Disabled
 public class SkyStoneTensorFlow{
 
     private final String TFOD_MODEL_ASSET = "Skystone.tflite";

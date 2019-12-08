@@ -17,7 +17,7 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 // uncomment the @Disable annotation to remove the OpMode from the OpMode list.
 
   @Autonomous(name="Vision_Auto_Tensor", group="Exercises")
-//@Disabled
+@Disabled
     public class Vision_Auto_Tensor extends LinearOpMode {
         private static final String TFOD_MODEL_ASSET = "Skystone.tflite";
         private static final String LABEL_FIRST_ELEMENT = "Stone";
