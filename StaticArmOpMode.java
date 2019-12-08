@@ -81,11 +81,11 @@ public class StaticArmOpMode extends LinearOpMode {
             if ((gamepad1.y) && (fang_open)) {
                 fang_open = false;
                 rightFang.setPosition(0.4);
-                leftFang.setPosition(0.7);
+                leftFang.setPosition(1);
             } else if ((gamepad1.b) && (!fang_open)) {
                 fang_open = true;
                 rightFang.setPosition(0.0);
-                leftFang.setPosition(-0.2);
+                leftFang.setPosition(0.4);
             }
 
             // Decrease drivetrain speed if slowmode is on
