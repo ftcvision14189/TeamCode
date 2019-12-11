@@ -1,6 +1,9 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.media.MediaDrm;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -8,7 +11,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 // @Autonomous classifies the OpMode as autonomous, name is the OpMode title and the
 // optional group places the OpMode into the Exercises group.
 // uncomment the @Disable annotation to remove the OpMode from the OpMode list.
-
+@Disabled
 @Autonomous(name="ParkTurnFar", group="Exercises")
 //@Disabled
 public class ParkTurnClose extends LinearOpMode

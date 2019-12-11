@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
         import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+        import com.qualcomm.robotcore.eventloop.opmode.Disabled;
         import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
         import com.qualcomm.robotcore.hardware.DcMotor;
 
@@ -10,7 +11,7 @@ package org.firstinspires.ftc.teamcode;
 // uncomment the @Disable annotation to remove the OpMode from the OpMode list.
 
 @Autonomous(name="RepoPark", group="Exercises")
-//@Disabled
+@Disabled
 public class RepoPark extends LinearOpMode
 {
     DcMotor leftMotor;

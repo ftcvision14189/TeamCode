@@ -54,7 +54,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * is explained below.
  */
 @Autonomous(name = "Object Detection Webcam", group = "Concept")
-//@Disabled
+@Disabled
 public class Vision_ConceptTensorFlowObjectDetectionWebcam1 extends LinearOpMode
 {
     DcMotor leftMotor;

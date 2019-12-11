@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name="Catapult", group="Linear Opmode")
+@TeleOp(name="DriveForward", group="Linear Opmode")
 public class DriveForward extends LinearOpMode
 {
 
