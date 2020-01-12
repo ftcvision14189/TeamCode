@@ -20,8 +20,8 @@ public class Mecanum extends LinearOpMode {
     DcMotor rightFrontMotor = null;
     DcMotor leftRearMotor = null;
     DcMotor rightRearMotor = null;
-    Servo rightFang = hardwareMap.servo.get("rightServo");
-    Servo leftFang = hardwareMap.servo.get("leftServo");
+//    Servo rightFang = null;
+//    Servo leftFang = null;
 
     boolean fang_open = false;
 
@@ -52,6 +52,7 @@ public class Mecanum extends LinearOpMode {
         rightFrontMotor = hardwareMap.dcMotor.get("rightFront");
         leftRearMotor = hardwareMap.dcMotor.get("leftRear");
         rightRearMotor = hardwareMap.dcMotor.get("rightRear");
+
 
         // Set the drive motor direction:
         // "Reverse" the motor that runs backwards when connected directly to the battery
@@ -110,7 +111,7 @@ public class Mecanum extends LinearOpMode {
             rightRearMotor.setPower(RR);
 
             //Toggle Fang Position when Y is pressed on gamepad1
-            if ((gamepad1.y) && (fang_open)) {
+ /*           if ((gamepad1.y) && (fang_open)) {
                 fang_open = false;
                 rightFang.setPosition(0.4);
                 leftFang.setPosition(0.42);
@@ -119,12 +120,13 @@ public class Mecanum extends LinearOpMode {
                 rightFang.setPosition(0.0);
                 leftFang.setPosition(1);
             }
-
+*/
             // Send some useful parameters to the driver station
             telemetry.addData("LF", "%.3f", LF);
             telemetry.addData("RF", "%.3f", RF);
             telemetry.addData("LR", "%.3f", LR);
             telemetry.addData("RR", "%.3f", RR);
+//            telemetry.addData("Fang: ", "left(%.2f), right (%.2f)", leftFang.getPosition(), rightFang.getPosition());
             
         }
     }
