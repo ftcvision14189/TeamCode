@@ -19,7 +19,7 @@ package org.firstinspires.ftc.teamcode;
  *
  */
 
-@TeleOp(name="Mecanum Proto Manual", group="Linear Opmode") // @Autonomous(...) is the other common choice
+@TeleOp(name="Mecanum Drive", group="Linear Opmode") // @Autonomous(...) is the other common choice
 // @Disabled
 public class MecanumDrive extends LinearOpMode {
 
