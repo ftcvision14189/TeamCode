@@ -8,16 +8,6 @@ package org.firstinspires.ftc.teamcode;
         import com.qualcomm.robotcore.hardware.HardwareMap;
         import com.qualcomm.robotcore.hardware.Servo;
 
-/**
- * Team 9960 Revision 161027.0
- * This program provides driver station control of the Team 9960 Mecanum Drive Prototype.
- *
- * This robot uses four VEX Mecanum wheels, each direct driven by Neverest 20 motors.
- * It is designed as a linear op mode, and uses RUN_WITH_ENCODER motor operation.
- *
- * The gamepad1 right joystick is used for translation movement, while the left joystick x-axis controls rotation.
- *
- */
 
 @TeleOp(name="Mecanum Drive", group="Linear Opmode") // @Autonomous(...) is the other common choice
 // @Disabled
