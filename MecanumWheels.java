@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name="OpMode Static Arm", group="Linear Opmode")
+@TeleOp(name="MecanumWheels", group="Linear Opmode")
 
 public class MecanumWheels extends LinearOpMode {
 

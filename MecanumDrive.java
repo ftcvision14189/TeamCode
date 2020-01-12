@@ -10,7 +10,7 @@ package org.firstinspires.ftc.teamcode;
 
 
 @TeleOp(name="Mecanum Drive", group="Linear Opmode") // @Autonomous(...) is the other common choice
-// @Disabled
+@Disabled
 public class MecanumDrive extends LinearOpMode {
 
     /* Declare OpMode members. */

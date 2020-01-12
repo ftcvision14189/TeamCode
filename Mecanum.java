@@ -20,6 +20,11 @@ public class Mecanum extends LinearOpMode {
     DcMotor rightFrontMotor = null;
     DcMotor leftRearMotor = null;
     DcMotor rightRearMotor = null;
+    Servo rightFang = hardwareMap.servo.get("rightServo");
+    Servo leftFang = hardwareMap.servo.get("leftServo");
+
+    boolean fang_open = false;
+
     // declare motor speed variables
     double RF;
     double LF;
@@ -84,9 +89,9 @@ public class Mecanum extends LinearOpMode {
             X2 = gamepad1.left_stick_x * joyScale;
 
             // Forward movement
-            LF += Y1; RF += Y1; LR += Y1; RR += Y1;
+            LF -= Y1; RF += Y1; LR -= Y1; RR += Y1;
             // Back movement
-            LF -= Y2; RF -= Y2; LR -= Y2; RR -= Y2;
+            LF += Y2; RF -= Y2; LR += Y2; RR -= Y2;
             // Side to side movement
             LF -= X1; RF += X1; LR += X1; RR -= X1;
             // Rotation movement
@@ -103,6 +108,17 @@ public class Mecanum extends LinearOpMode {
             rightFrontMotor.setPower(RF);
             leftRearMotor.setPower(LR);
             rightRearMotor.setPower(RR);
+
+            //Toggle Fang Position when Y is pressed on gamepad1
+            if ((gamepad1.y) && (fang_open)) {
+                fang_open = false;
+                rightFang.setPosition(0.4);
+                leftFang.setPosition(0.42);
+            } else if ((gamepad1.b) && (!fang_open)) {
+                fang_open = true;
+                rightFang.setPosition(0.0);
+                leftFang.setPosition(1);
+            }
 
             // Send some useful parameters to the driver station
             telemetry.addData("LF", "%.3f", LF);
