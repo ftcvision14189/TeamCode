@@ -20,6 +20,7 @@ public class Mecanum extends LinearOpMode {
     DcMotor rightFrontMotor = null;
     DcMotor leftRearMotor = null;
     DcMotor rightRearMotor = null;
+    DcMotor liftMotor = null;
 //    Servo rightFang = null;
 //    Servo leftFang = null;
 
@@ -52,6 +53,7 @@ public class Mecanum extends LinearOpMode {
         rightFrontMotor = hardwareMap.dcMotor.get("rightFront");
         leftRearMotor = hardwareMap.dcMotor.get("leftRear");
         rightRearMotor = hardwareMap.dcMotor.get("rightRear");
+        liftMotor = hardwareMap.dcMotor.get("lift");
 
 
         // Set the drive motor direction:
@@ -80,6 +82,7 @@ public class Mecanum extends LinearOpMode {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
 
+            double liftPower;
             // Reset speed variables
             LF = 0; RF = 0; LR = 0; RR = 0;
 
@@ -121,6 +124,10 @@ public class Mecanum extends LinearOpMode {
                 leftFang.setPosition(1);
             }
 */
+
+            liftPower = gamepad2.right_stick_x;
+            
+            liftMotor.setPower(liftPower);
             // Send some useful parameters to the driver station
             telemetry.addData("LF", "%.3f", LF);
             telemetry.addData("RF", "%.3f", RF);
