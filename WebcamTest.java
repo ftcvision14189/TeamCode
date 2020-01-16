@@ -42,6 +42,10 @@ import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import java.util.List;
 
 
+<<<<<<< Updated upstream
+=======
+@Disabled
+>>>>>>> Stashed changes
 @TeleOp(name = "Webcam Test", group = "Auto")
 public class WebcamTest extends LinearOpMode {
     private static final String TFOD_MODEL_ASSET = "Skystone.tflite";

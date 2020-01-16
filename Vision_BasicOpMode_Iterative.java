@@ -54,6 +54,7 @@ public class Vision_BasicOpMode_Iterative extends OpMode
     public void init() {
         telemetry.addData("Status", "Initialized");
 
+
         // Initialize the hardware variables. Note that the strings used here as parameters
         // to 'get' must correspond to the names assigned during the robot configuration
         // step (using the FTC Robot Controller app on the phone).
