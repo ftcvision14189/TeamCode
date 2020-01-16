@@ -27,7 +27,6 @@ import com.qualcomm.robotcore.hardware.Servo;
             rightFang = hardwareMap.servo.get("rightServo");
 
 
-            //rightMotor.setDirection(DcMotor.Direction.REVERSE);
             leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
             rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);
             leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
