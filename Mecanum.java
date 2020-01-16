@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
-@TeleOp(name="Mecanum Drive1", group="Linear Opmode") // @Autonomous(...) is the other common choice
+@TeleOp(name="MecanumTeleop", group="Linear Opmode") // @Autonomous(...) is the other common choice
 // @Disabled
 public class Mecanum extends LinearOpMode {
 
