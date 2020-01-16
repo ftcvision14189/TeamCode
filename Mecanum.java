@@ -89,17 +89,18 @@ public class Mecanum extends LinearOpMode {
             // Get joystick values
             Y1 = gamepad1.right_stick_y * joyScale; // invert so up is positive
             X1 = gamepad1.right_stick_x * joyScale;
-            Y2 = -gamepad1.left_stick_y * joyScale; // Y2 is not used at present
+            Y2 = gamepad1.left_stick_y * joyScale; // Y2 is not used at present
             X2 = gamepad1.left_stick_x * joyScale;
 
-            // Forward movement
-            LF += Y1; RF += Y1; LR += Y1; RR += Y1;
             // Back movement
+            LF += Y1; RF += Y1; LR += Y1; RR += Y1;
+            // Forward movement
             LF -= Y2; RF -= Y2; LR -= Y2; RR -= Y2;
-            // Side to side movement
-            LF += X1; RF -= X1; LR -= X1; RR += X1;
             // Rotation movement
-            LF += X2; RF -= X2; LR += X2; RR -= X2;
+            LF -= X2; RF -= X2; LR += X2; RR += X2;
+            // Side to side movement
+            LF -= X1; RF += X1; LR -= X1; RR += X1;
+
 
             // Clip motor power values to +-motorMax
             LF = Math.max(-motorMax, Math.min(LF, motorMax));
@@ -125,8 +126,8 @@ public class Mecanum extends LinearOpMode {
             }
 */
 
-            liftPower = gamepad2.right_stick_x;
-            
+            liftPower = gamepad2.right_stick_y;
+
             liftMotor.setPower(liftPower);
             // Send some useful parameters to the driver station
             telemetry.addData("LF", "%.3f", LF);
