@@ -21,8 +21,9 @@ public class Mecanum extends LinearOpMode {
     DcMotor leftRearMotor = null;
     DcMotor rightRearMotor = null;
     DcMotor liftMotor = null;
-//    Servo rightFang = null;
-//    Servo leftFang = null;
+    Servo claw = null;
+    Servo rightFang = null;
+    Servo leftFang = null;
 
     boolean fang_open = false;
 
@@ -38,7 +39,7 @@ public class Mecanum extends LinearOpMode {
     double Y2;
     // operational constants
     double joyScale = 0.5;
-    double motorMax = 0.6; // Limit motor power to this value for Andymark RUN_USING_ENCODER mode
+    double motorMax = 0.7; // Limit motor power to this value for Andymark RUN_USING_ENCODER mode
 
     @Override
     public void runOpMode() {
@@ -54,6 +55,9 @@ public class Mecanum extends LinearOpMode {
         leftRearMotor = hardwareMap.dcMotor.get("leftRear");
         rightRearMotor = hardwareMap.dcMotor.get("rightRear");
         liftMotor = hardwareMap.dcMotor.get("lift");
+        claw = hardwareMap.servo.get("claw");
+        rightFang = hardwareMap.servo.get("rightServo");
+        leftFang = hardwareMap.servo.get("leftServo");
 
 
         // Set the drive motor direction:
@@ -83,6 +87,8 @@ public class Mecanum extends LinearOpMode {
             telemetry.update();
 
             double liftPower;
+            double clawPower;
+
             // Reset speed variables
             LF = 0; RF = 0; LR = 0; RR = 0;
 
@@ -115,26 +121,29 @@ public class Mecanum extends LinearOpMode {
             rightRearMotor.setPower(RR);
 
             //Toggle Fang Position when Y is pressed on gamepad1
- /*           if ((gamepad1.y) && (fang_open)) {
+            if ((gamepad2.y) && (fang_open)) {
                 fang_open = false;
                 rightFang.setPosition(0.4);
                 leftFang.setPosition(0.42);
-            } else if ((gamepad1.b) && (!fang_open)) {
+            } else if ((gamepad2.b) && (!fang_open)) {
                 fang_open = true;
                 rightFang.setPosition(0.0);
                 leftFang.setPosition(1);
             }
-*/
 
             liftPower = gamepad2.right_stick_y;
+            clawPower = gamepad2.left_stick_y;
 
+            claw.setPosition(-clawPower);
             liftMotor.setPower(liftPower);
+
             // Send some useful parameters to the driver station
             telemetry.addData("LF", "%.3f", LF);
             telemetry.addData("RF", "%.3f", RF);
             telemetry.addData("LR", "%.3f", LR);
             telemetry.addData("RR", "%.3f", RR);
-//          telemetry.addData("Fang: ", "left(%.2f), right (%.2f)", leftFang.getPosition(), rightFang.getPosition());
+            telemetry.addData("Claw: ", "%.3f", clawPower);
+            telemetry.addData("Fang: ", "left(%.2f), right (%.2f)", leftFang.getPosition(), rightFang.getPosition());
             
         }
     }
