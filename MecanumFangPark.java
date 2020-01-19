@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Autonomous(name = "MecanumBridgePark", group = "Auto")
+@Autonomous(name = "MecanumFangPark", group = "Auto")
     public class MecanumFangPark extends LinearOpMode {
 
         DcMotor leftFrontMotor = null;
@@ -44,25 +44,75 @@ import com.qualcomm.robotcore.hardware.Servo;
 
             // set both motors to 25% power.
 
+            leftFang.setPosition(0.42);
+            rightFang.setPosition(0.4);
+
             leftFrontMotor.setPower(0.6);
             rightFrontMotor.setPower(0.6);
             leftRearMotor.setPower(0.6);
             rightRearMotor.setPower(0.6);
             sleep(1000);
 
-            leftFrontMotor.setPower(0.6);
+            leftFrontMotor.setPower(0.0);
+            rightFrontMotor.setPower(0.0);
+            leftRearMotor.setPower(0.0);
+            rightRearMotor.setPower(0.0);
+            sleep(500);
+
+            leftFrontMotor.setPower(-0.6);
             rightFrontMotor.setPower(-0.6);
-            leftRearMotor.setPower(-0.6);
+            leftRearMotor.setPower(0.6);
             rightRearMotor.setPower(0.6);
-            sleep(200);
+            sleep(500);
 
-            leftFang.setPosition(0.43);
-            rightFang.setPosition(0.5);
+            leftFrontMotor.setPower(0.0);
+            rightFrontMotor.setPower(0.0);
+            leftRearMotor.setPower(0.0);
+            rightRearMotor.setPower(0.0);
+            sleep(300);
 
+            leftFrontMotor.setPower(0.6);
+            rightFrontMotor.setPower(0.6);
+            leftRearMotor.setPower(0.6);
+            rightRearMotor.setPower(0.6);
+            sleep(300);
+
+            leftFrontMotor.setPower(0.0);
+            rightFrontMotor.setPower(0.0);
+            leftRearMotor.setPower(0.0);
+            rightRearMotor.setPower(0.0);
+            sleep(400);
+
+            leftFang.setPosition(1.0);
+            rightFang.setPosition(0.0);
+            sleep(500);
+            
             leftFrontMotor.setPower(-0.6);
             rightFrontMotor.setPower(-0.6);
             leftRearMotor.setPower(-0.6);
             rightRearMotor.setPower(-0.6);
-            sleep(100);
+            sleep(1800);
+
+            leftFrontMotor.setPower(0.0);
+            rightFrontMotor.setPower(0.0);
+            leftRearMotor.setPower(0.0);
+            rightRearMotor.setPower(0.0);
+            sleep(200);
+
+            leftFang.setPosition(0.42);
+            rightFang.setPosition(0.4);
+            sleep(500);
+            leftFrontMotor.setPower(0.6);
+            rightFrontMotor.setPower(0.6);
+            leftRearMotor.setPower(-0.6);
+            rightRearMotor.setPower(-0.6);
+            sleep(1200);
+
+            leftFrontMotor.setPower(0.0);
+            rightFrontMotor.setPower(0.0);
+            leftRearMotor.setPower(0.0);
+            rightRearMotor.setPower(0.0);
+            sleep(200);
+
         }
   }
