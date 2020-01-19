@@ -20,8 +20,10 @@ public class Mecanum extends LinearOpMode {
     DcMotor rightFrontMotor = null;
     DcMotor leftRearMotor = null;
     DcMotor rightRearMotor = null;
-//    Servo rightFang = null;
-//    Servo leftFang = null;
+    DcMotor liftMotor = null;
+    Servo claw = null;
+    Servo rightFang = null;
+    Servo leftFang = null;
 
     boolean fang_open = false;
 
@@ -33,11 +35,13 @@ public class Mecanum extends LinearOpMode {
     // declare joystick position variables
     double X1;
     double Y1;
-    double X2;
     double Y2;
+    double Z1;
+    double Z2;
+
     // operational constants
     double joyScale = 0.5;
-    double motorMax = 0.6; // Limit motor power to this value for Andymark RUN_USING_ENCODER mode
+    double motorMax = 0.7; // Limit motor power to this value for Andymark RUN_USING_ENCODER mode
 
     @Override
     public void runOpMode() {
@@ -52,6 +56,10 @@ public class Mecanum extends LinearOpMode {
         rightFrontMotor = hardwareMap.dcMotor.get("rightFront");
         leftRearMotor = hardwareMap.dcMotor.get("leftRear");
         rightRearMotor = hardwareMap.dcMotor.get("rightRear");
+        liftMotor = hardwareMap.dcMotor.get("lift");
+        claw = hardwareMap.servo.get("claw");
+        rightFang = hardwareMap.servo.get("rightServo");
+        leftFang = hardwareMap.servo.get("leftServo");
 
 
         // Set the drive motor direction:
@@ -80,23 +88,28 @@ public class Mecanum extends LinearOpMode {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
 
+            double liftPower;
+            double clawPower;
+
             // Reset speed variables
             LF = 0; RF = 0; LR = 0; RR = 0;
 
-            // Get joystick values
-            Y1 = gamepad1.right_stick_y * joyScale; // invert so up is positive
+            // Get joystick value
             X1 = gamepad1.right_stick_x * joyScale;
-            Y2 = -gamepad1.left_stick_y * joyScale; // Y2 is not used at present
-            X2 = gamepad1.left_stick_x * joyScale;
+            Z1 = gamepad1.right_trigger;
+            Z2 = gamepad1.left_trigger;
+            Y2 = gamepad1.left_stick_y * joyScale; // Y2 is not used at present
 
             // Forward movement
-            LF += Y1; RF += Y1; LR += Y1; RR += Y1;
-            // Back movement
             LF -= Y2; RF -= Y2; LR -= Y2; RR -= Y2;
-            // Side to side movement
-            LF += X1; RF -= X1; LR -= X1; RR += X1;
+            // Right side movement
+            LF -= Z1; RF -= Z1; LR += Z1; RR += Z1;
+            // Left side movement
+            LF += Z2; RF += Z2; LR -= Z2; RR -= Z2;
             // Rotation movement
-            LF += X2; RF -= X2; LR += X2; RR -= X2;
+            LF -= X1; RF += X1; LR -= X1; RR += X1;
+
+
 
             // Clip motor power values to +-motorMax
             LF = Math.max(-motorMax, Math.min(LF, motorMax));
@@ -111,22 +124,29 @@ public class Mecanum extends LinearOpMode {
             rightRearMotor.setPower(RR);
 
             //Toggle Fang Position when Y is pressed on gamepad1
- /*           if ((gamepad1.y) && (fang_open)) {
+            if ((gamepad2.y) && (fang_open)) {
                 fang_open = false;
                 rightFang.setPosition(0.4);
                 leftFang.setPosition(0.42);
-            } else if ((gamepad1.b) && (!fang_open)) {
+            } else if ((gamepad2.b) && (!fang_open)) {
                 fang_open = true;
                 rightFang.setPosition(0.0);
                 leftFang.setPosition(1);
             }
-*/
+
+            liftPower = 0.75 * gamepad2.right_stick_y;
+            clawPower = gamepad2.left_stick_y;
+
+            claw.setPosition(clawPower);
+            liftMotor.setPower(liftPower);
+
             // Send some useful parameters to the driver station
             telemetry.addData("LF", "%.3f", LF);
             telemetry.addData("RF", "%.3f", RF);
             telemetry.addData("LR", "%.3f", LR);
             telemetry.addData("RR", "%.3f", RR);
-//          telemetry.addData("Fang: ", "left(%.2f), right (%.2f)", leftFang.getPosition(), rightFang.getPosition());
+            telemetry.addData("Claw: ", "%.3f", clawPower);
+            telemetry.addData("Fang: ", "left(%.2f), right (%.2f)", leftFang.getPosition(), rightFang.getPosition());
             
         }
     }
