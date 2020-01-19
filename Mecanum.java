@@ -79,7 +79,7 @@ public class Mecanum extends LinearOpMode {
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        
+
         //liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Wait for the game to start (driver presses PLAY)
