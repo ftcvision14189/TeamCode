@@ -41,7 +41,11 @@ public class Mecanum extends LinearOpMode {
 
     // operational constants
     double joyScale = 0.5;
+<<<<<<< HEAD
     double motorMax = 0.7; // Limit motor power to this value for Andymark RUN_USING_ENCODER mode
+=======
+    double motorMax = 0.9; // Limit motor power to this value for Andymark RUN_USING_ENCODER mode
+>>>>>>> 5ea3d63d0f781d6ad6e1a14273bfbeab2614a409
 
     @Override
     public void runOpMode() {
@@ -70,6 +74,7 @@ public class Mecanum extends LinearOpMode {
         leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
         rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
 
+
         // Set the drive motor run modes:
         // "RUN_USING_ENCODER" causes the motor to try to run at the specified fraction of full velocity
         // Note: We were not able to make this run mode work until we switched Channel A and B encoder wiring into
@@ -78,6 +83,8 @@ public class Mecanum extends LinearOpMode {
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        //liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -134,7 +141,12 @@ public class Mecanum extends LinearOpMode {
                 leftFang.setPosition(1);
             }
 
+<<<<<<< HEAD
             liftPower = 0.75 * gamepad2.right_stick_y;
+=======
+
+            liftPower = gamepad2.right_stick_y;
+>>>>>>> 5ea3d63d0f781d6ad6e1a14273bfbeab2614a409
             clawPower = gamepad2.left_stick_y;
 
             claw.setPosition(clawPower);
@@ -147,7 +159,12 @@ public class Mecanum extends LinearOpMode {
             telemetry.addData("RR", "%.3f", RR);
             telemetry.addData("Claw: ", "%.3f", clawPower);
             telemetry.addData("Fang: ", "left(%.2f), right (%.2f)", leftFang.getPosition(), rightFang.getPosition());
-            
+<<<<<<< HEAD
+=======
+            telemetry.addData("Lift:", "position (%i)", liftMotor.getCurrentPosition());
+
+>>>>>>> 5ea3d63d0f781d6ad6e1a14273bfbeab2614a409
+
         }
     }
 }
