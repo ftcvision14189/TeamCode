@@ -10,8 +10,8 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 
-@TeleOp(name="MecanumTeleop", group="Linear Opmode") // @Autonomous(...) is the other common choice
-// @Disabled
+@TeleOp(name="Mecanum", group="Linear Opmode") // @Autonomous(...) is the other common choice
+//@Disabled
 public class Mecanum extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -35,13 +35,12 @@ public class Mecanum extends LinearOpMode {
     // declare joystick position variables
     double X1;
     double Y1;
-    double Y2;
     double Z1;
     double Z2;
 
     // operational constants
-    double joyScale = 0.5;
-    double motorMax = 0.9; // Limit motor power to this value for Andymark RUN_USING_ENCODER mode
+    double joyScale = 1;
+    double motorMax = 1; // Limit motor power to this value for Andymark RUN_USING_ENCODER mode
 
     @Override
     public void runOpMode() {
@@ -70,7 +69,6 @@ public class Mecanum extends LinearOpMode {
         leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
         rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
 
-
         // Set the drive motor run modes:
         // "RUN_USING_ENCODER" causes the motor to try to run at the specified fraction of full velocity
         // Note: We were not able to make this run mode work until we switched Channel A and B encoder wiring into
@@ -79,8 +77,6 @@ public class Mecanum extends LinearOpMode {
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        //liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -99,20 +95,19 @@ public class Mecanum extends LinearOpMode {
 
             // Get joystick value
             X1 = gamepad1.right_stick_x * joyScale;
-            Z1 = gamepad1.right_trigger;
-            Z2 = gamepad1.left_trigger;
-            Y2 = gamepad1.left_stick_y * joyScale; // Y2 is not used at present
+            Y1 = gamepad1.left_stick_y * joyScale;
+            Z1 = Math.pow(gamepad1.left_stick_x * joyScale, 3);
+            Z2 = gamepad1.right_trigger;
+
 
             // Forward movement
-            LF -= Y2; RF -= Y2; LR -= Y2; RR -= Y2;
+            LF -= Y1; RF -= Y1; LR -= Y1; RR -= Y1;
             // Right side movement
             LF -= Z1; RF -= Z1; LR += Z1; RR += Z1;
             // Left side movement
-            LF += Z2; RF += Z2; LR -= Z2; RR -= Z2;
+            //LF += Z2; RF += Z2; LR -= Z2; RR -= Z2;
             // Rotation movement
             LF -= X1; RF += X1; LR -= X1; RR += X1;
-
-
 
             // Clip motor power values to +-motorMax
             LF = Math.max(-motorMax, Math.min(LF, motorMax));
@@ -137,8 +132,7 @@ public class Mecanum extends LinearOpMode {
                 leftFang.setPosition(1);
             }
 
-
-            liftPower = gamepad2.right_stick_y;
+            liftPower = 0.75 * gamepad2.right_stick_y;
             clawPower = gamepad2.left_stick_y;
 
             claw.setPosition(clawPower);
@@ -151,8 +145,6 @@ public class Mecanum extends LinearOpMode {
             telemetry.addData("RR", "%.3f", RR);
             telemetry.addData("Claw: ", "%.3f", clawPower);
             telemetry.addData("Fang: ", "left(%.2f), right (%.2f)", leftFang.getPosition(), rightFang.getPosition());
-            telemetry.addData("Lift:", "position (%i)", liftMotor.getCurrentPosition());
-
             
         }
     }

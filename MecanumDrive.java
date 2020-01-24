@@ -9,7 +9,7 @@ package org.firstinspires.ftc.teamcode;
         import com.qualcomm.robotcore.hardware.Servo;
 
 
-@TeleOp(name="Mecanum1 Drive", group="Linear Opmode") // @Autonomous(...) is the other common choice
+@TeleOp(name="Mecanum Drive", group="Linear Opmode") // @Autonomous(...) is the other common choice
 @Disabled
 public class MecanumDrive extends LinearOpMode {
 
