@@ -145,7 +145,7 @@ public class Mecanum extends LinearOpMode {
             telemetry.addData("RR", "%.3f", RR);
             telemetry.addData("Claw: ", "%.3f", clawPower);
             telemetry.addData("Fang: ", "left(%.2f), right (%.2f)", leftFang.getPosition(), rightFang.getPosition());
-            
+
         }
     }
 }

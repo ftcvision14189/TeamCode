@@ -57,6 +57,17 @@ public class MecanumDrive extends LinearOpMode {
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lift.setMode(DcMotor.RunMOde.RUN_USING_ENCODER);
+
+        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        lift.setTargetPosition(getTargetPosition);
+        lift.setMode(DcMotor.STOP_AND_RESET_ENCODER);
+        lift.setTargetPosition(getTargetPosition);
+        while(motor.isBusy()&& opModeIsActive()) {
+
+        }
+        lift.setPower(0.5);
+
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
