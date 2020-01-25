@@ -29,10 +29,10 @@ public class TensorFlowSkystone {
   //  @Disabled
     public class Vision_ConceptTensorFlowObjectDetectionWebcam1 extends LinearOpMode
     {
-        DcMotor leftFrontMotor = null;
-        DcMotor rightFrontMotor = null;
-        DcMotor leftRearMotor = null;
-        DcMotor rightRearMotor = null;
+        DcMotor leftFront = null;
+        DcMotor rightFront = null;
+        DcMotor leftRear = null;
+        DcMotor rightRear = null;
         DcMotor liftMotor = null;
         Servo claw = null;
         Servo rightFang = null;
@@ -74,10 +74,10 @@ public class TensorFlowSkystone {
                 tfod.activate();
             }
 
-            leftFrontMotor = hardwareMap.dcMotor.get("leftFront");
-            rightFrontMotor = hardwareMap.dcMotor.get("rightFront");
-            leftRearMotor = hardwareMap.dcMotor.get("leftRear");
-            rightRearMotor = hardwareMap.dcMotor.get("rightRear");
+            leftFront = hardwareMap.dcMotor.get("leftFront");
+            rightFront = hardwareMap.dcMotor.get("rightFront");
+            leftRear = hardwareMap.dcMotor.get("leftRear");
+            rightRear = hardwareMap.dcMotor.get("rightRear");
             liftMotor = hardwareMap.dcMotor.get("lift");
             claw = hardwareMap.servo.get("claw");
             rightFang = hardwareMap.servo.get("rightServo");
@@ -88,10 +88,10 @@ public class TensorFlowSkystone {
             telemetry.update();
             waitForStart();
 
-            leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
-            rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);
-            leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
-            rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
+            leftFront.setDirection(DcMotor.Direction.REVERSE);
+            rightFront.setDirection(DcMotor.Direction.FORWARD);
+            leftRear.setDirection(DcMotor.Direction.REVERSE);
+            rightRear.setDirection(DcMotor.Direction.FORWARD);
 
             leftFront.setPower(-0.75);
             rightFront.setPower(0.75);

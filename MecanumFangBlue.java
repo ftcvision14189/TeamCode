@@ -54,13 +54,14 @@ import com.qualcomm.robotcore.hardware.Servo;
             rightFrontMotor.setPower(0.6);
             leftRearMotor.setPower(0.6);
             rightRearMotor.setPower(0.6);
-            sleep(1200);
+            sleep(1000);
 
             leftFrontMotor.setPower(0.0);
             rightFrontMotor.setPower(0.0);
             leftRearMotor.setPower(0.0);
             rightRearMotor.setPower(0.0);
             sleep(500);
+
 
             leftFrontMotor.setPower(-0.6);
             rightFrontMotor.setPower(-0.6);
@@ -138,24 +139,36 @@ import com.qualcomm.robotcore.hardware.Servo;
             rightRearMotor.setPower(0);
             sleep(1600);
 
+            leftFrontMotor.setPower(1);
+            rightFrontMotor.setPower(1);
+            leftRearMotor.setPower(1);
+            rightRearMotor.setPower(1);
+            sleep(1600);
+
             leftFang.setPosition(1.0);
             rightFang.setPosition(0.0);
             sleep(500);
 
             //move sideways to park
+            leftFrontMotor.setPower(-0.6);
+            rightFrontMotor.setPower(-0.6);
+            leftRearMotor.setPower(-0.6);
+            rightRearMotor.setPower(-0.6);
+            sleep(1100);
+
             leftFrontMotor.setPower(0.6);
             rightFrontMotor.setPower(0.6);
             leftRearMotor.setPower(-0.6);
             rightRearMotor.setPower(-0.6);
-            sleep(1100);
+            sleep(1600);
 
             liftMotor.setPower(0.0);
 
             leftFrontMotor.setPower(0.6);
             rightFrontMotor.setPower(0.6);
-            leftRearMotor.setPower(-0.9);
-            rightRearMotor.setPower(-0.8);
-            sleep(1850);
+            leftRearMotor.setPower(0.6);
+            rightRearMotor.setPower(0.6);
+            sleep(900);
 
             leftFrontMotor.setPower(0.0);
             rightFrontMotor.setPower(0.0);
