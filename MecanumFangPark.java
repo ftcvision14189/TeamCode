@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
-
+@Disabled
 @Autonomous(name = "MecanumFangPark", group = "Auto")
 public class MecanumFangPark extends LinearOpMode {
 
@@ -35,13 +36,16 @@ public class MecanumFangPark extends LinearOpMode {
         rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
 
         liftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        rightFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        leftRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        leftFrontMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        leftRearMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        rightRearMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        leftRearMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        rightRearMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         telemetry.addData("Mode", "waiting");
         telemetry.update();
@@ -60,13 +64,22 @@ public class MecanumFangPark extends LinearOpMode {
         claw.setPosition(0.5);
 
         //go forward
-        rightFrontMotor.setTargetPosition(50);
+        leftFrontMotor.setTargetPosition(10);
+        rightFrontMotor.setTargetPosition(10);
+        leftRearMotor.setTargetPosition(10);
+        rightRearMotor.setTargetPosition(10);
+
         leftFrontMotor.setPower(0.6);
         rightFrontMotor.setPower(0.6);
         leftRearMotor.setPower(0.6);
         rightRearMotor.setPower(0.6);
 
-        while (opModeIsActive() && rightFrontMotor.isBusy())
+        //leftFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //rightFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //leftRearMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        //rightRearMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        while (opModeIsActive() && leftFrontMotor.isBusy() && rightFrontMotor.isBusy() && leftRearMotor.isBusy() && rightRearMotor.isBusy())
         {
             telemetry.addData("encoder-fwd", rightFrontMotor.getCurrentPosition() + "  busy=" + rightFrontMotor.isBusy());
             telemetry.update();

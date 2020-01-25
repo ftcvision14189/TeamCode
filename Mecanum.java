@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 
 @TeleOp(name="Mecanum", group="Linear Opmode") // @Autonomous(...) is the other common choice
-//@Disabled
+@Disabled
 public class Mecanum extends LinearOpMode {
 
     /* Declare OpMode members. */
