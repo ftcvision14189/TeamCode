@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Autonomous(name = "MecanumBridgePark", group = "Auto")
+@Autonomous(name = "MecanumFoundation", group = "Auto")
 public class MecanumFoundation extends LinearOpMode {
 
     DcMotor leftFrontMotor = null;

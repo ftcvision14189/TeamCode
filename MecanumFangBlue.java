@@ -118,7 +118,7 @@ import com.qualcomm.robotcore.hardware.Servo;
             rightFrontMotor.setPower(-1.0);
             leftRearMotor.setPower(-0.8);
             rightRearMotor.setPower(-1.0);
-            sleep(1600);
+            sleep(1200);
 
             leftFrontMotor.setPower(0);
             rightFrontMotor.setPower(0);
@@ -131,44 +131,47 @@ import com.qualcomm.robotcore.hardware.Servo;
             rightFrontMotor.setPower(-1.0);
             leftRearMotor.setPower(1.0);
             rightRearMotor.setPower(-1.0);
-            sleep(800);
+            sleep(1400);
 
             leftFrontMotor.setPower(0);
             rightFrontMotor.setPower(0);
             leftRearMotor.setPower(0);
             rightRearMotor.setPower(0);
-            sleep(1600);
+            sleep(500);
 
-            leftFrontMotor.setPower(0.7);
-            rightFrontMotor.setPower(0.7);
-            leftRearMotor.setPower(0.7);
-            rightRearMotor.setPower(0.7);
-            sleep(1600);
+            //push forward to align with wall
+            leftFrontMotor.setPower(0.6);
+            rightFrontMotor.setPower(0.6);
+            leftRearMotor.setPower(0.6);
+            rightRearMotor.setPower(0.6);
+            sleep(450);
 
             leftFang.setPosition(1.0);
             rightFang.setPosition(0.0);
-            sleep(500);
+            sleep(300);
 
-            //move sideways to park
+            //move sideways off foundation
+            leftFrontMotor.setPower(0.6);
+            rightFrontMotor.setPower(0.6);
+            leftRearMotor.setPower(-0.6);
+            rightRearMotor.setPower(-0.6);
+            sleep(700);
+
+            //move backwards
+            leftFrontMotor.setPower(-0.6);
+            rightFrontMotor.setPower(-0.6);
+            leftRearMotor.setPower(-0.6);
+            rightRearMotor.setPower(-0.6);
+            sleep(800);
+
+            liftMotor.setPower(0.0);
+
+            //move backwards and park
             leftFrontMotor.setPower(-0.6);
             rightFrontMotor.setPower(-0.6);
             leftRearMotor.setPower(-0.6);
             rightRearMotor.setPower(-0.6);
             sleep(1100);
-
-            leftFrontMotor.setPower(0.6);
-            rightFrontMotor.setPower(0.6);
-            leftRearMotor.setPower(-0.6);
-            rightRearMotor.setPower(-0.6);
-            sleep(1600);
-
-            liftMotor.setPower(0.0);
-
-            leftFrontMotor.setPower(0.6);
-            rightFrontMotor.setPower(0.6);
-            leftRearMotor.setPower(0.6);
-            rightRearMotor.setPower(0.6);
-            sleep(900);
 
             leftFrontMotor.setPower(0.0);
             rightFrontMotor.setPower(0.0);
