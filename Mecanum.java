@@ -82,6 +82,7 @@ public class Mecanum extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
+
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
@@ -102,7 +103,7 @@ public class Mecanum extends LinearOpMode {
             // Forward movement
             LF -= Y1; RF -= Y1; LR -= Y1; RR -= Y1;
             // Right side movement
-            LF -= Z1; RF -= Z1; LR += Z1; RR += Z1;
+            LF += Z1; RF += Z1; LR -= Z1; RR -= Z1;
             // Left side movement
             //LF += Z2; RF += Z2; LR -= Z2; RR -= Z2;
             // Rotation movement
@@ -124,11 +125,11 @@ public class Mecanum extends LinearOpMode {
             if ((gamepad2.y) && (fang_open)) {
                 fang_open = false;
                 rightFang.setPosition(0.4);
-                leftFang.setPosition(0.42);
+                leftFang.setPosition(1);
             } else if ((gamepad2.b) && (!fang_open)) {
                 fang_open = true;
-                rightFang.setPosition(0.0);
-                leftFang.setPosition(1);
+                rightFang.setPosition(1);
+                leftFang.setPosition(0);
             }
 
             liftPower = 0.75 * gamepad2.right_stick_y;
