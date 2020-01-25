@@ -85,7 +85,6 @@ public class Mecanum extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.update();
 
             double liftPower;
             double clawPower;
@@ -146,7 +145,7 @@ public class Mecanum extends LinearOpMode {
             telemetry.addData("Claw: ", "%.3f", clawPower);
             telemetry.addData("Fang: ", "left(%.2f), right (%.2f)", leftFang.getPosition(), rightFang.getPosition());
             telemetry.addData("Lift: ", "position(%d)", liftMotor.getCurrentPosition());
-
+            telemetry.update();
         }
     }
 }

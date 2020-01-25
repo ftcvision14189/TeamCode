@@ -62,7 +62,7 @@ import com.qualcomm.robotcore.hardware.Servo;
             rightRearMotor.setPower(0.0);
             sleep(500);
 
-
+            //go sideways to aline with foundation
             leftFrontMotor.setPower(-0.6);
             rightFrontMotor.setPower(-0.6);
             leftRearMotor.setPower(0.6);
@@ -80,7 +80,7 @@ import com.qualcomm.robotcore.hardware.Servo;
             rightFrontMotor.setPower(0.6);
             leftRearMotor.setPower(0.6);
             rightRearMotor.setPower(0.6);
-            sleep(800);
+            sleep(700);
 
             leftFrontMotor.setPower(0.0);
             rightFrontMotor.setPower(0.0);
@@ -94,11 +94,11 @@ import com.qualcomm.robotcore.hardware.Servo;
             sleep(500);
 
             //pull foundation back
-            leftFrontMotor.setPower(-1);
-            rightFrontMotor.setPower(-1);
-            leftRearMotor.setPower(-1);
-            rightRearMotor.setPower(-1);
-            sleep(900);
+            leftFrontMotor.setPower(-0.6);
+            rightFrontMotor.setPower(-0.6);
+            leftRearMotor.setPower(-0.6);
+            rightRearMotor.setPower(-0.6);
+            sleep(1400);
 
             //turn while moving back
             leftFrontMotor.setPower(8);
@@ -139,10 +139,10 @@ import com.qualcomm.robotcore.hardware.Servo;
             rightRearMotor.setPower(0);
             sleep(1600);
 
-            leftFrontMotor.setPower(1);
-            rightFrontMotor.setPower(1);
-            leftRearMotor.setPower(1);
-            rightRearMotor.setPower(1);
+            leftFrontMotor.setPower(0.7);
+            rightFrontMotor.setPower(0.7);
+            leftRearMotor.setPower(0.7);
+            rightRearMotor.setPower(0.7);
             sleep(1600);
 
             leftFang.setPosition(1.0);
