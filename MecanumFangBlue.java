@@ -33,6 +33,8 @@ import com.qualcomm.robotcore.hardware.Servo;
             leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
             rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
 
+            liftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
             telemetry.addData("Mode", "waiting");
             telemetry.update();
 
@@ -105,7 +107,7 @@ import com.qualcomm.robotcore.hardware.Servo;
             rightFrontMotor.setPower(-8);
             leftRearMotor.setPower(8);
             rightRearMotor.setPower(-8);
-            sleep(1500);
+            sleep(3000);
 
             leftFrontMotor.setPower(0.0);
             rightFrontMotor.setPower(0.0);
