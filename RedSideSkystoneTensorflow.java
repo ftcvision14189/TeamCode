@@ -55,6 +55,8 @@ public class RedSideSkystoneTensorflow extends LinearOpMode {
             int skystonePosition;
             List<Recognition> updatedRecognitions = null;
             int i = 0;
+
+            // Wait until we have detected a Skystone
             while (updatedRecognitions == null) {
                 updatedRecognitions = tfod.getUpdatedRecognitions();
                 telemetry.addData("Status", "Scanning for Skystone (%i)", i);
@@ -64,6 +66,7 @@ public class RedSideSkystoneTensorflow extends LinearOpMode {
             }
 
                 /*i = 0;
+                // Continue scanning to ensure results are accurate
                 while (i < 50) {
                     updatedRecognitions = tfod.getUpdatedRecognitions();
                     telemetry.addData("Status", "Improving recognition (%i)", i);
@@ -72,19 +75,27 @@ public class RedSideSkystoneTensorflow extends LinearOpMode {
                     i++;
                 }*/
 
+            // Loop through all new recognition
             for (Recognition recognition : updatedRecognitions) {
+
+                // Make sure the object is a Skystone
                 if (recognition.getLabel().equals("Skystone")) {
                     centerX = ((recognition.getRight() + recognition.getLeft()) / 2);
                     centerY = ((recognition.getTop() + recognition.getBottom()) / 2);
+
+                    // Check if Skystone is in left position
                     if ((Math.abs(centerX - LEFT_BLOCK_X) < BLOCK_LOCATION_TOLERANCE) && ((Math.abs(centerY - LEFT_BLOCK_Y) > BLOCK_LOCATION_TOLERANCE))) {
                         telemetry.addData("Skystone Detected", "Position 1");
                         skystonePosition = 0;
+                    // Check if Skystone is in middle posotion
                     } else if ((Math.abs(centerX - MIDDLE_BLOCK_X) < BLOCK_LOCATION_TOLERANCE) && ((Math.abs(centerY - MIDDLE_BLOCK_Y) > BLOCK_LOCATION_TOLERANCE))) {
                         telemetry.addData("Skystone Detected", "Position 2");
                         skystonePosition = 1;
+                    // Check if Skystone is in right position
                     } else if ((Math.abs(centerX - RIGHT_BLOCK_X) < BLOCK_LOCATION_TOLERANCE) && ((Math.abs(centerY - RIGHT_BLOCK_Y) > BLOCK_LOCATION_TOLERANCE))) {
                         telemetry.addData("Skystone Detected", "Position 3");
                         skystonePosition = 2;
+                    // Give information on Skystone if it isn't in any of the positions (debug)
                     } else {
                         telemetry.addData("Label", recognition.getLabel());
                         telemetry.addData("Center Coordinates:", "(%.03f, %.03f)",
@@ -102,7 +113,7 @@ public class RedSideSkystoneTensorflow extends LinearOpMode {
         }
     }
 
-
+    // Vuforia setup function
     private void initVuforia() {
 
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
@@ -113,7 +124,7 @@ public class RedSideSkystoneTensorflow extends LinearOpMode {
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
     }
 
-
+    // TensorFlow setup function
     private void initTfod() {
         int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
                 "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());

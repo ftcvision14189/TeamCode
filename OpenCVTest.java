@@ -32,7 +32,7 @@ import java.util.List;
     private static int valLeft = -1;
     private static int valRight = -1;
 
-    private static float rectHeight = .6f/5f;
+    private static float rectHeight = .6f/3f;
     private static float rectWidth = 1.5f/8f;
 
     private static float offsetX = 0f/8f;//changing this moves the three rects and the three circles left or right, range : (-2, 2) not inclusive
@@ -51,6 +51,7 @@ import java.util.List;
     public void runOpMode()
     {
 
+        // Setup hardware
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
 
         // Setup OpenCV
@@ -59,7 +60,6 @@ import java.util.List;
         webcam.startStreaming(rows, cols, OpenCvCameraRotation.UPRIGHT);
         OpenCvTrackerApiPipeline trackerApiPipeline = new OpenCvTrackerApiPipeline();
         webcam.setPipeline(new StageSwitchingPipeline());
-
 
         // Wait for play button to be pressed
         waitForStart();
@@ -76,15 +76,13 @@ import java.util.List;
         }
     }
 
-    static class StageSwitchingPipeline extends OpenCvPipeline
-    {
+    static class StageSwitchingPipeline extends OpenCvPipeline {
         Mat yCbCrChan2Mat = new Mat();
         Mat thresholdMat = new Mat();
         Mat all = new Mat();
         List<MatOfPoint> contoursList = new ArrayList<>();
 
-        enum Stage
-        {//color difference. greyscale
+        enum Stage {//color difference. greyscale
             detection,//includes outlines
             THRESHOLD,//b&w
             RAW_IMAGE,//displays raw view
@@ -94,8 +92,7 @@ import java.util.List;
         private Stage[] stages = Stage.values();
 
         @Override
-        public void onViewportTapped()
-        {
+        public void onViewportTapped() {
             /*
              * Note that this method is invoked from the UI thread
              * so whatever we do here, we must do quickly.
@@ -105,8 +102,7 @@ import java.util.List;
 
             int nextStageNum = currentStageNum + 1;
 
-            if(nextStageNum >= stages.length)
-            {
+            if(nextStageNum >= stages.length) {
                 nextStageNum = 0;
             }
 
@@ -114,8 +110,7 @@ import java.util.List;
         }
 
         @Override
-        public Mat processFrame(Mat input)
-        {
+        public Mat processFrame(Mat input) {
             contoursList.clear();
             /*
              * This pipeline finds the contours of yellow blobs such as the Gold Mineral
@@ -186,31 +181,23 @@ import java.util.List;
                             input.rows()*(rightPos[1]+rectHeight/2)),
                     new Scalar(0, 255, 0), 3);
 
-            switch (stageToRenderToViewport)
-            {
-                case THRESHOLD:
-                {
+            switch (stageToRenderToViewport) {
+                case THRESHOLD: {
                     return thresholdMat;
                 }
 
-                case detection:
-                {
+                case detection: {
                     return all;
                 }
 
-                case RAW_IMAGE:
-                {
+                case RAW_IMAGE: {
                     return input;
                 }
 
-                default:
-                {
+                default: {
                     return input;
                 }
             }
         }
-
     }
-
-
 }
