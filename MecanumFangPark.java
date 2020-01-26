@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
-@Disabled
+
 @Autonomous(name = "MecanumFangPark", group = "Auto")
 public class MecanumFangPark extends LinearOpMode {
 
@@ -54,6 +54,11 @@ public class MecanumFangPark extends LinearOpMode {
 
         waitForStart();
 
+        leftFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
         telemetry.addData("Mode", "running");
         telemetry.update();
 
@@ -64,27 +69,21 @@ public class MecanumFangPark extends LinearOpMode {
         claw.setPosition(0.5);
 
         //go forward
-        leftFrontMotor.setTargetPosition(10);
-        rightFrontMotor.setTargetPosition(10);
-        leftRearMotor.setTargetPosition(10);
-        rightRearMotor.setTargetPosition(10);
-
-        leftFrontMotor.setPower(0.6);
-        rightFrontMotor.setPower(0.6);
-        leftRearMotor.setPower(0.6);
-        rightRearMotor.setPower(0.6);
-
-        //leftFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //rightFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //leftRearMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        //rightRearMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        while (opModeIsActive() && leftFrontMotor.isBusy() && rightFrontMotor.isBusy() && leftRearMotor.isBusy() && rightRearMotor.isBusy())
+        int distanceForward = 100;
+        while (opModeIsActive() && leftFrontMotor.getCurrentPosition() < distanceForward)
         {
+            //powerValue = ( distanceForward - leftFrontMotor.getCurrentPosition()) / distanceForward;
+            leftFrontMotor.setPower(( distanceForward - leftFrontMotor.getCurrentPosition()) / distanceForward);
+            rightFrontMotor.setPower((distanceForward - rightFrontMotor.getCurrentPosition()) / distanceForward);
+            leftRearMotor.setPower((distanceForward - leftRearMotor.getCurrentPosition()) / distanceForward);
+            rightRearMotor.setPower((distanceForward - rightRearMotor.getCurrentPosition()) / distanceForward);
+
             telemetry.addData("encoder-fwd", rightFrontMotor.getCurrentPosition() + "  busy=" + rightFrontMotor.isBusy());
             telemetry.update();
-            idle();
+            //idle();
         }
+
+        telemetry.addLine("Boomer");
 
         leftFrontMotor.setPower(0.0);
         rightFrontMotor.setPower(0.0);

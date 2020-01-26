@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
-@Disabled
+
 @Autonomous(name = "MecanumWallPark", group = "Auto")
     public class MecanumWallPark extends LinearOpMode {
 
