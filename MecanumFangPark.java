@@ -51,7 +51,6 @@ public class MecanumFangPark extends LinearOpMode {
         telemetry.update();
 
         // wait for start button.
-
         waitForStart();
 
         leftFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -72,7 +71,6 @@ public class MecanumFangPark extends LinearOpMode {
         int distanceForward = 100;
         while (opModeIsActive() && leftFrontMotor.getCurrentPosition() < distanceForward)
         {
-            //powerValue = ( distanceForward - leftFrontMotor.getCurrentPosition()) / distanceForward;
             leftFrontMotor.setPower(( distanceForward - leftFrontMotor.getCurrentPosition()) / distanceForward);
             rightFrontMotor.setPower((distanceForward - rightFrontMotor.getCurrentPosition()) / distanceForward);
             leftRearMotor.setPower((distanceForward - leftRearMotor.getCurrentPosition()) / distanceForward);
@@ -83,7 +81,7 @@ public class MecanumFangPark extends LinearOpMode {
             //idle();
         }
 
-        telemetry.addLine("Boomer");
+        telemetry.addLine("test end loop");
 
         leftFrontMotor.setPower(0.0);
         rightFrontMotor.setPower(0.0);
@@ -91,72 +89,5 @@ public class MecanumFangPark extends LinearOpMode {
         rightRearMotor.setPower(0.0);
         sleep(500);
 
-        /*go sideways to align with foundation
-        leftFrontMotor.setPower(-0.6);
-        rightFrontMotor.setPower(-0.6);
-        leftRearMotor.setPower(0.6);
-        rightRearMotor.setPower(0.6);
-        sleep(500);
-
-        leftFrontMotor.setPower(0.0);
-        rightFrontMotor.setPower(0.0);
-        leftRearMotor.setPower(0.0);
-        rightRearMotor.setPower(0.0);
-        sleep(300);
-
-        //go forward to foundation
-        leftFrontMotor.setPower(0.6);
-        rightFrontMotor.setPower(0.6);
-        leftRearMotor.setPower(0.6);
-        rightRearMotor.setPower(0.6);
-        sleep(700);
-
-        leftFrontMotor.setPower(0.0);
-        rightFrontMotor.setPower(0.0);
-        leftRearMotor.setPower(0.0);
-        rightRearMotor.setPower(0.0);
-        sleep(400);
-
-        //grab onto foundation
-        leftFang.setPosition(0.5);
-        rightFang.setPosition(0.4);
-        liftMotor.setPower(0);
-        sleep(500);
-
-        //pull foundation back
-        leftFrontMotor.setPower(-0.6);
-        rightFrontMotor.setPower(-0.6);
-        leftRearMotor.setPower(-0.6);
-        rightRearMotor.setPower(-0.6);
-        sleep(1400);
-
-
-        //move sideways off foundation
-        leftFrontMotor.setPower(0.6);
-        rightFrontMotor.setPower(0.6);
-        leftRearMotor.setPower(-0.6);
-        rightRearMotor.setPower(-0.6);
-        sleep(700);
-
-        leftFrontMotor.setPower(0);
-        rightFrontMotor.setPower(0);
-        leftRearMotor.setPower(0);
-        rightRearMotor.setPower(0);
-        sleep(400);
-
-        liftMotor.setPower(0.0);
-
-        leftFrontMotor.setPower(0.6);
-        rightFrontMotor.setPower(0.6);
-        leftRearMotor.setPower(-0.6);
-        rightRearMotor.setPower(-0.6);
-        sleep(700);
-
-        leftFrontMotor.setPower(0);
-        rightFrontMotor.setPower(0);
-        leftRearMotor.setPower(0);
-        rightRearMotor.setPower(0);
-        sleep(400);
-        */
     }
 }

@@ -41,13 +41,10 @@ import com.qualcomm.robotcore.hardware.Servo;
             telemetry.update();
 
             // wait for start button.
-
             waitForStart();
 
             telemetry.addData("Mode", "running");
             telemetry.update();
-
-            // set both motors to 25% power.
 
             leftFang.setPosition(1.0);
             rightFang.setPosition(0.0);
