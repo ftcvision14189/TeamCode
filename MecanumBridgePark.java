@@ -13,7 +13,7 @@ import com.qualcomm.robotcore.hardware.Servo;
         DcMotor rightFrontMotor = null;
         DcMotor leftRearMotor = null;
         DcMotor rightRearMotor = null;
-        private Servo leftFang = null;
+        private Servo xleftFang = null;
         private Servo rightFang = null;
 
         // called when init button is  pressed.
