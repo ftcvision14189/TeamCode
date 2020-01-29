@@ -57,7 +57,7 @@ import com.qualcomm.robotcore.hardware.Servo;
             rightFrontMotor.setPower(0.6);
             leftRearMotor.setPower(0.6);
             rightRearMotor.setPower(0.6);
-            sleep(1000);
+            sleep(1200);
 
             leftFrontMotor.setPower(0.0);
             rightFrontMotor.setPower(0.0);
