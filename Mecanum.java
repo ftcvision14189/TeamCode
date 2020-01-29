@@ -101,7 +101,7 @@ public class Mecanum extends LinearOpMode {
 
 
             // Forward movement
-            LF -= Y1; RF -= Y1; LR -= Y1; RR -= Y1;
+            LF += Y1; RF += Y1; LR += Y1; RR += Y1;
             // Right side movement
             LF += Z1; RF += Z1; LR -= Z1; RR -= Z1;
             // Left side movement
