@@ -25,7 +25,7 @@ public class TensorFlowSkystone {
      * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
      * is explained below.
      */
-    @Autonomous(name = "Object Detection Webcam", group = "Concept")
+    @Autonomous(name = "SkyStoneWebcam", group = "Concept")
   //  @Disabled
     public class Vision_ConceptTensorFlowObjectDetectionWebcam1 extends LinearOpMode
     {
@@ -93,16 +93,16 @@ public class TensorFlowSkystone {
             leftRear.setDirection(DcMotor.Direction.REVERSE);
             rightRear.setDirection(DcMotor.Direction.FORWARD);
 
-            leftFront.setPower(-0.75);
-            rightFront.setPower(0.75);
-            leftRear.setPower(-0.75);
-            rightRear.setPower(0.75);
+            leftFrontMotor.setPower(-0.75);
+            rightFrontMotor.setPower(0.75);
+            leftRearMotor.setPower(-0.75);
+            rightRearMotor.setPower(0.75);
             sleep(700);
 
-            leftFront.setPower(-0.75);
-            rightFront.setPower(-0.75);
-            leftRear.setPower(0.75);
-            rightRear.setPower(0.75);
+            leftFrontMotor.setPower(-0.75);
+            rightFrontMotor.setPower(-0.75);
+            leftRearMotor.setPower(0.75);
+            rightRearMotor.setPower(0.75);
             sleep(700);
 
 
@@ -154,10 +154,10 @@ public class TensorFlowSkystone {
                                 telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
                                 telemetry.addData(String.format("left,top (%d)", i), "%.03f , %.03f",
                                         recognition.getLeft(), recognition.getTop());
-                                leftFront.setPower(-0.75);
-                                rightFront.setPower(0.75);
-                                leftRear.setPower(-0.75);
-                                rightRear.setPower(0.75);
+                                leftFrontMotor.setPower(-0.75);
+                                rightFrontMotor.setPower(0.75);
+                                leftRearMotor.setPower(-0.75);
+                                rightRearMotor.setPower(0.75);
                                 sleep(700);
                                 telemetry.addData(String.format("right,bottom (%d)", i), "%.03f , %.03f",
                                         recognition.getRight(), recognition.getBottom());
