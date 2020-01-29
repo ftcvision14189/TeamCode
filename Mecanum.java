@@ -68,6 +68,7 @@ public class Mecanum extends LinearOpMode {
         rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);
         leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
         rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
+        claw.setDirection(Servo.Direction.REVERSE);
 
         // Set the drive motor run modes:
         // "RUN_USING_ENCODER" causes the motor to try to run at the specified fraction of full velocity
@@ -88,7 +89,7 @@ public class Mecanum extends LinearOpMode {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
 
             double liftPower;
-            double clawPower;
+            double clawPos = 0.1;
 
             // Reset speed variables
             LF = 0; RF = 0; LR = 0; RR = 0;
@@ -96,7 +97,7 @@ public class Mecanum extends LinearOpMode {
             // Get joystick value
             X1 = gamepad1.right_stick_x * joyScale;
             Y1 = gamepad1.left_stick_y * joyScale;
-            Z1 = Math.pow(gamepad1.left_stick_x * joyScale, 3);
+            Z1 = gamepad1.left_stick_x * joyScale;
             Z2 = gamepad1.right_trigger;
 
 
@@ -133,17 +134,23 @@ public class Mecanum extends LinearOpMode {
             }
 
             liftPower = 0.75 * gamepad2.right_stick_y;
-            clawPower = gamepad2.left_stick_y;
 
-            claw.setPosition(clawPower);
+            clawPos += (0.01 * gamepad2.left_stick_y);
+            if (clawPos > 0.7) {
+                clawPos = 0.7;
+            }
+            else if (clawPos < 0.1) {
+                clawPos = 0.1;
+            }
             liftMotor.setPower(liftPower);
+            claw.setPosition(clawPos);
 
             // Send some useful parameters to the driver station
             telemetry.addData("LF", "%.3f", LF);
             telemetry.addData("RF", "%.3f", RF);
             telemetry.addData("LR", "%.3f", LR);
             telemetry.addData("RR", "%.3f", RR);
-            telemetry.addData("Claw: ", "%.3f", clawPower);
+            telemetry.addData("Claw: ", "%.3f", clawPos);
             telemetry.addData("Fang: ", "left(%.2f), right (%.2f)", leftFang.getPosition(), rightFang.getPosition());
             telemetry.addData("Lift: ", "position(%d)", liftMotor.getCurrentPosition());
             telemetry.update();
