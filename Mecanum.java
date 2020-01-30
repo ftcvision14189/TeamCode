@@ -44,8 +44,6 @@ public class Mecanum extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        telemetry.addData("Status", "Initialized");
-        telemetry.update();
 
         /* Initialize the hardware variables. Note that the strings used here as parameters
          * to 'get' must correspond to the names assigned during the robot configuration
@@ -68,6 +66,16 @@ public class Mecanum extends LinearOpMode {
         rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);
         leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
         rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
+        claw.setDirection(Servo.Direction.REVERSE);
+
+        telemetry.addData("Status", "Calibrating lift.");
+        telemetry.update();
+        liftMotor.setPower(0.05);
+        sleep(1000);
+        liftMotor.setPower(0);
+        liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        liftMotor.setTargetPosition(0);
+        liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // Set the drive motor run modes:
         // "RUN_USING_ENCODER" causes the motor to try to run at the specified fraction of full velocity
@@ -79,16 +87,20 @@ public class Mecanum extends LinearOpMode {
         rightRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Wait for the game to start (driver presses PLAY)
+        telemetry.addData("Status", "Waiting for start.");
+        telemetry.update();
         waitForStart();
         runtime.reset();
+        double clawPos;
+        float liftSpeed = 40;
+        int liftPos;
+
+        int LIFT_MAX = 1625;
 
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-
-            double liftPower;
-            double clawPower;
 
             // Reset speed variables
             LF = 0; RF = 0; LR = 0; RR = 0;
@@ -132,18 +144,34 @@ public class Mecanum extends LinearOpMode {
                 leftFang.setPosition(0);
             }
 
-            liftPower = 0.75 * gamepad2.right_stick_y;
-            clawPower = gamepad2.left_stick_y;
+            if (gamepad2.left_trigger > 0) {
+                clawPos = 0.7;
+            }
+            else {
+                clawPos = 0.1;
+            }
 
-            claw.setPosition(clawPower);
-            liftMotor.setPower(liftPower);
+            liftPos = Math.round(liftMotor.getTargetPosition() + (liftSpeed * -gamepad2.right_stick_y));
+            if (liftPos > LIFT_MAX) {
+                liftPos = LIFT_MAX;
+            }
+            else if (liftPos < 0) {
+                liftPos = 0;
+            }
+
+            liftMotor.setPower(0.8);
+
+
+
+
+            liftMotor.setTargetPosition(liftPos);
+            claw.setPosition(clawPos);
 
             // Send some useful parameters to the driver station
             telemetry.addData("LF", "%.3f", LF);
             telemetry.addData("RF", "%.3f", RF);
             telemetry.addData("LR", "%.3f", LR);
             telemetry.addData("RR", "%.3f", RR);
-            telemetry.addData("Claw: ", "%.3f", clawPower);
             telemetry.addData("Fang: ", "left(%.2f), right (%.2f)", leftFang.getPosition(), rightFang.getPosition());
             telemetry.addData("Lift: ", "position(%d)", liftMotor.getCurrentPosition());
             telemetry.update();
