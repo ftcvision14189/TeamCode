@@ -39,7 +39,7 @@ public class Mecanum extends LinearOpMode {
     double Z2;
 
     // operational constants
-    double joyScale = 1;
+    double joyScale = 0.8;
     double motorMax = 1; // Limit motor power to this value for Andymark RUN_USING_ENCODER mode
 
     @Override
@@ -95,12 +95,39 @@ public class Mecanum extends LinearOpMode {
         float liftSpeed = 40;
         int liftPos;
 
-        int LIFT_MAX = 1625;
+        int LIFT_MAX = 1635;
+
+        boolean slowmode = false;
+        boolean wasYPressed = false;
 
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
+
+            if (gamepad1.y && !wasYPressed){
+                slowmode = !slowmode;
+                wasYPressed = true;
+            }
+
+            else if (!gamepad1.y) {
+                wasYPressed = false;
+            }
+
+            if (slowmode) {
+                joyScale = 0.5;
+                telemetry.addData("Mode", "Slow");
+            }
+            else if (gamepad1.right_trigger > 0){
+                joyScale = 1;
+                telemetry.addLine("I.");
+                telemetry.addLine("AM.");
+                telemetry.addLine("SPEED.");
+            }
+            else {
+                joyScale = 0.8;
+                telemetry.addData("Mode", "Normal");
+            }
 
             // Reset speed variables
             LF = 0; RF = 0; LR = 0; RR = 0;
