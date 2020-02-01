@@ -1,13 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Autonomous(name = "MecanumWallPark", group = "Auto")
-    public class MecanumWallPark extends LinearOpMode {
+@Autonomous(name = "MecanumWallWait", group = "Auto")
+    public class MecanumWallWait extends LinearOpMode {
 
         DcMotor leftFrontMotor = null;
         DcMotor rightFrontMotor = null;
@@ -44,7 +43,7 @@ import com.qualcomm.robotcore.hardware.Servo;
             telemetry.update();
 
             // set both motors to 25% power.
-
+            sleep(23000);
             leftFrontMotor.setPower(-0.6);
             rightFrontMotor.setPower(-0.6);
             leftRearMotor.setPower(-0.6);

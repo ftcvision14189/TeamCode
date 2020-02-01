@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Autonomous(name = "MecanumFoundation", group = "Auto")
-public class MecanumFoundation extends LinearOpMode {
+@Autonomous(name = "MecanumFang", group = "Auto")
+public class MecanumFang extends LinearOpMode {
 
     DcMotor leftFrontMotor = null;
     DcMotor rightFrontMotor = null;
@@ -105,12 +105,7 @@ public class MecanumFoundation extends LinearOpMode {
         rightFrontMotor.setPower(-0.6);
         leftRearMotor.setPower(-0.8);
         rightRearMotor.setPower(-0.6);
-        sleep(2300);
-
-        leftFang.setPosition(0);
-        rightFang.setPosition(1);
-        liftMotor.setPower(0);
-        sleep(500);
+        sleep(2600);
 
         leftFrontMotor.setPower(0);
         rightFrontMotor.setPower(0);
@@ -118,14 +113,58 @@ public class MecanumFoundation extends LinearOpMode {
         rightRearMotor.setPower(0);
         sleep(400);
 
-        liftMotor.setPower(0.0);
+        //turn to push into building zone
+        leftFrontMotor.setPower(0.8);
+        rightFrontMotor.setPower(-0.5);
+        leftRearMotor.setPower(0.8);
+        rightRearMotor.setPower(-0.5);
+        sleep(1500);
 
-        //strafe and park
+        leftFrontMotor.setPower(0);
+        rightFrontMotor.setPower(0);
+        leftRearMotor.setPower(0);
+        rightRearMotor.setPower(0);
+        sleep(400);
+
+        /*leftFrontMotor.setPower(0.8);
+        rightFrontMotor.setPower(0.8);
+        leftRearMotor.setPower(0.8);
+        rightRearMotor.setPower(0.8);
+        sleep(600);*/
+
+        leftFrontMotor.setPower(0.6);
+        rightFrontMotor.setPower(0.6);
+        leftRearMotor.setPower(0.6);
+        rightRearMotor.setPower(0.6);
+        sleep(400);
+
+        leftFang.setPosition(0);
+        rightFang.setPosition(1);
+        liftMotor.setPower(0);
+        sleep(200);
+
+        leftFrontMotor.setPower(0);
+        rightFrontMotor.setPower(0);
+        leftRearMotor.setPower(0);
+        rightRearMotor.setPower(0);
+        sleep(400);
+
         leftFrontMotor.setPower(0.6);
         rightFrontMotor.setPower(0.6);
         leftRearMotor.setPower(-0.6);
         rightRearMotor.setPower(-0.6);
-        sleep(1900);
+        sleep(500);
+
+
+
+        liftMotor.setPower(0.0);
+
+        //back up and park
+        leftFrontMotor.setPower(-0.6);
+        rightFrontMotor.setPower(-0.6);
+        leftRearMotor.setPower(-0.6);
+        rightRearMotor.setPower(-0.6);
+        sleep(1700);
 
         leftFrontMotor.setPower(0);
         rightFrontMotor.setPower(0);
