@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous(name = "MecanumFoundation", group = "Auto")
@@ -30,10 +31,10 @@ public class MecanumFoundation extends LinearOpMode {
         liftMotor = hardwareMap.dcMotor.get("lift");
         claw = hardwareMap.servo.get("claw");
 
-        leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
-        rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);
-        leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
-        rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
+        leftFrontMotor.setDirection(DcMotor.Direction.FORWARD);
+        rightFrontMotor.setDirection(DcMotor.Direction.REVERSE);
+        leftRearMotor.setDirection(DcMotor.Direction.FORWARD);
+        rightRearMotor.setDirection(DcMotor.Direction.REVERSE);
 
         liftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -94,7 +95,7 @@ public class MecanumFoundation extends LinearOpMode {
         sleep(400);
 
         //grab onto foundation
-        leftFang.setPosition(0.5);
+        leftFang.setPosition(1);
         rightFang.setPosition(0.4);
         liftMotor.setPower(0);
         sleep(500);
@@ -108,10 +109,10 @@ public class MecanumFoundation extends LinearOpMode {
 
 
         //move sideways off foundation
-        leftFrontMotor.setPower(0.6);
-        rightFrontMotor.setPower(0.6);
-        leftRearMotor.setPower(-0.6);
-        rightRearMotor.setPower(-0.6);
+        leftFrontMotor.setPower(-0.6);
+        rightFrontMotor.setPower(-0.6);
+        leftRearMotor.setPower(0.6);
+        rightRearMotor.setPower(0.6);
         sleep(700);
 
         leftFrontMotor.setPower(0);
