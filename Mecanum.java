@@ -163,12 +163,12 @@ public class Mecanum extends LinearOpMode {
             //Toggle Fang Position when Y is pressed on gamepad1
             if ((gamepad2.y) && (fang_open)) {
                 fang_open = false;
-                rightFang.setPosition(0.4);
-                leftFang.setPosition(1);
-            } else if ((gamepad2.b) && (!fang_open)) {
-                fang_open = true;
                 rightFang.setPosition(1);
                 leftFang.setPosition(0);
+            } else if ((gamepad2.b) && (!fang_open)) {
+                fang_open = true;
+                rightFang.setPosition(0.4);
+                leftFang.setPosition(1);
             }
 
             if (gamepad2.left_trigger > 0) {
