@@ -9,14 +9,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-
-<<<<<<< Updated upstream
-@TeleOp(name="Mecanum", group="Linear Opmode") // @Autonomous(...) is the other common choice
-
-=======
 @TeleOp(name="MecanumTeleop", group="Linear Opmode") // @Autonomous(...) is the other common choice
  @Disabled
->>>>>>> Stashed changes
+
 public class Mecanum extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -44,17 +39,16 @@ public class Mecanum extends LinearOpMode {
     double Z2;
 
     // operational constants
-<<<<<<< Updated upstream
+
     double joyScale = 1;
     double motorMax = 1; // Limit motor power to this value for Andymark RUN_USING_ENCODER mode
-=======
-    double joyScale = 0.5;
+  /*  double joyScale = 0.5;
 
     double motorMax = 0.7; // Limit motor power to this value for Andymark RUN_USING_ENCODER mode
-
+*/
     //double motorMax = 0.9; // Limit motor power to this value for Andymark RUN_USING_ENCODER mode
 
->>>>>>> Stashed changes
+
 
     @Override
     public void runOpMode() {
@@ -146,17 +140,15 @@ public class Mecanum extends LinearOpMode {
                 leftFang.setPosition(0);
             }
 
-<<<<<<< Updated upstream
+
             liftPower = 0.75 * gamepad2.right_stick_y;
             clawPower = gamepad2.left_stick_y;
-=======
 
             liftPower = 0.75 * gamepad2.right_stick_y;
 
 
             liftPower = gamepad2.right_stick_y;
            clawPower = gamepad2.left_stick_y;
->>>>>>> Stashed changes
 
             claw.setPosition(clawPower);
             liftMotor.setPower(liftPower);
@@ -168,15 +160,11 @@ public class Mecanum extends LinearOpMode {
             telemetry.addData("RR", "%.3f", RR);
             telemetry.addData("Claw: ", "%.3f", clawPower);
             telemetry.addData("Fang: ", "left(%.2f), right (%.2f)", leftFang.getPosition(), rightFang.getPosition());
-<<<<<<< Updated upstream
+
             telemetry.addData("Lift: ", "position(%d)", liftMotor.getCurrentPosition());
             telemetry.update();
-=======
-
             telemetry.addData("Lift:", "position (%i)", liftMotor.getCurrentPosition());
 
-
->>>>>>> Stashed changes
         }
     }
 }
