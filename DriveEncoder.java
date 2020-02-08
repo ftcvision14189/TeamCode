@@ -9,14 +9,16 @@ import com.qualcomm.robotcore.hardware.DcMotorController;
 //@Disabled
     public class DriveEncoder extends LinearOpMode
     {
-        DcMotor leftMotor;
-        DcMotor rightMotor;
+        DcMotor leftFrontMotor;
+        DcMotor leftRearMotor;
+        DcMotor rightFrontMotor;
+        DcMotor rightRearMotor;
 
         @Override
         public void runOpMode() throws InterruptedException
         {
-            leftMotor = hardwareMap.dcMotor.get("left_motor");
-            rightMotor = hardwareMap.dcMotor.get("right_motor");
+            leftFrontMotor = hardwareMap.dcMotor.get("left_motor");
+            rightFrontMotor = hardwareMap.dcMotor.get("right_motor");
 
             leftMotor.setDirection(DcMotor.Direction.REVERSE);
 
@@ -104,5 +106,53 @@ import com.qualcomm.robotcore.hardware.DcMotorController;
                 telemetry.update();
                 idle();
             }
+        }
+        // Define movement functions
+        private void strafe(float rotations, double power) {
+            leftFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftRearMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightRearMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            leftFrontMotor.setTargetPosition(Math.round(1120 * rotations));
+            rightFrontMotor.setTargetPosition(Math.round(-1120 * rotations));
+            leftRearMotor.setTargetPosition(Math.round(-1120 * rotations));
+            rightRearMotor.setTargetPosition(Math.round(1120 * rotations));
+
+            leftFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftRearMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightRearMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            leftFrontMotor.setPower(power);
+            rightFrontMotor.setPower(power);
+            leftRearMotor.setPower(power);
+            rightRearMotor.setPower(power);
+        }
+
+        private void moveStraight(float rotations, double power) {
+            leftFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            leftRearMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            rightRearMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            leftFrontMotor.setTargetPosition(Math.round(1120 * rotations));
+            rightFrontMotor.setTargetPosition(Math.round(1120 * rotations));
+            leftRearMotor.setTargetPosition(Math.round(1120 * rotations));
+            rightRearMotor.setTargetPosition(Math.round(1120 * rotations));
+
+            leftFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            leftRearMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            rightRearMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            leftFrontMotor.setPower(power);
+            rightFrontMotor.setPower(power);
+            leftRearMotor.setPower(power);
+            rightRearMotor.setPower(power);
+        }
+
+        boolean robotIsBusy() {
+            return leftFrontMotor.isBusy() || rightFrontMotor.isBusy() || leftRearMotor.isBusy() || rightRearMotor.isBusy();
         }
     }
