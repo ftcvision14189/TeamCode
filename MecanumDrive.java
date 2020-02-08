@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
         import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-        import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+        import com.qualcomm.robotcore.eventloop.opmode.OpMode;
         import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
         import com.qualcomm.robotcore.util.ElapsedTime;
         import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,9 +9,9 @@ package org.firstinspires.ftc.teamcode;
         import com.qualcomm.robotcore.hardware.Servo;
 
 
-@TeleOp(name="Mecanum1 Drive", group="Linear Opmode") // @Autonomous(...) is the other common choice
-@Disabled
-public class MecanumDrive extends LinearOpMode {
+@TeleOp(name="Mecanum1 Drive", group="runOpmode") // @Autonomous(...) is the other common choice
+//@Disabled
+public class MecanumDrive extends OpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
@@ -19,6 +19,7 @@ public class MecanumDrive extends LinearOpMode {
     DcMotor rightFrontMotor = null;
     DcMotor leftRearMotor = null;
     DcMotor rightRearMotor = null;
+    DcMotor lift = null;
     // declare motor speed variables
     double RF; double LF; double RR; double LR;
     // declare joystick position variables
@@ -28,14 +29,12 @@ public class MecanumDrive extends LinearOpMode {
     double motorMax = 0.6; // Limit motor power to this value for Andymark RUN_USING_ENCODER mode
 
     @Override
-    public void runOpMode() {
+    public void init() {
         telemetry.addData("Status", "Initialized");
-        telemetry.update();
 
-        /* Initialize the hardware variables. Note that the strings used here as parameters
-         * to 'get' must correspond to the names assigned during the robot configuration
-         * step (using the FTC Robot Controller app on the phone).
-         */
+        // Initialize the hardware variables. Note that the strings used here as parameters
+        // to 'get' must correspond to the names assigned during the robot configuration
+        // step (using the FTC Robot Controller app on the phone).
         leftFrontMotor = hardwareMap.dcMotor.get("leftFront");
         rightFrontMotor = hardwareMap.dcMotor.get("rightFront");
         leftRearMotor = hardwareMap.dcMotor.get("leftRear");
@@ -49,33 +48,28 @@ public class MecanumDrive extends LinearOpMode {
         leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
         rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
 
+        // Tell the driver that initialization is complete.
+        telemetry.addData("Status", "Initialized");
+    }
+    @Override
+    public void loop() {
+        telemetry.addData("Status", "Initialized");
+        telemetry.update();
+
         // Set the drive motor run modes:
         // "RUN_USING_ENCODER" causes the motor to try to run at the specified fraction of full velocity
         // Note: We were not able to make this run mode work until we switched Channel A and B encoder wiring into
         // the motor controllers. (Neverest Channel A connects to MR Channel B input, and vice versa.)
-    /*   leftFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        leftFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        lift.setMode(DcMotor.RunMOde.RUN_USING_ENCODER);
-
-        lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        lift.setTargetPosition(getTargetPosition);
-        lift.setMode(DcMotor.STOP_AND_RESET_ENCODER);
-        lift.setTargetPosition(getTargetPosition);*/
-       // while(motor.isBusy()&& opModeIsActive()) {
-
-      //  }
-
 
 
         // Wait for the game to start (driver presses PLAY)
-        waitForStart();
-        runtime.reset();
 
         // run until the end of the match (driver presses STOP)
-        while (opModeIsActive())
-        {
+
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
 
@@ -114,6 +108,13 @@ public class MecanumDrive extends LinearOpMode {
             telemetry.addData("RF", "%.3f", RF);
             telemetry.addData("LR", "%.3f", LR);
             telemetry.addData("RR", "%.3f", RR);
+
+                telemetry.addData("encoder-fwd", leftFrontMotor.getCurrentPosition() + "  busy=" + rightFrontMotor.isBusy());
+                telemetry.addData("encoder-fwd", leftRearMotor.getCurrentPosition() + "  busy=" + leftRearMotor.isBusy());
+                telemetry.addData("encoder-fwd", rightFrontMotor.getCurrentPosition() + "  busy=" + rightFrontMotor.isBusy());
+                telemetry.addData("encoder-fwd", leftRearMotor.getCurrentPosition() + "  busy=" + rightRearMotor.isBusy());
+                telemetry.update();
+                //idle();
+
         }
     }
-}
