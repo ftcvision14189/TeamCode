@@ -83,7 +83,7 @@ import com.qualcomm.robotcore.hardware.Servo;
         leftRearMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         rightRearMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        /*leftFrontMotor.setTargetPosition(Math.round(1120 * rotations));
+        leftFrontMotor.setTargetPosition(Math.round(1120 * rotations));
         rightFrontMotor.setTargetPosition(Math.round(-1120 * rotations));
         leftRearMotor.setTargetPosition(Math.round(-1120 * rotations));
         rightRearMotor.setTargetPosition(Math.round(1120 * rotations));
@@ -91,26 +91,12 @@ import com.qualcomm.robotcore.hardware.Servo;
         leftFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         leftRearMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        rightRearMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);*/
-        double error = 100;
-        double k=.001;
+        rightRearMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        while(Math.abs(error)>10){
-            error = 1120-leftFrontMotor.getCurrentPosition()/1120;
-            leftFrontMotor.setPower(power*k);
-            rightFrontMotor.setPower(-power*k);
-            leftRearMotor.setPower(power*k);
-            rightRearMotor.setPower(-power*k);
-            telemetry.addData("error: ", error);
-            telemetry.update();
-        }
-
-        telemetry.addLine("it work tho?");
-        telemetry.update();
-        /*leftFrontMotor.setPower(power);
+        leftFrontMotor.setPower(power);
         rightFrontMotor.setPower(power);
         leftRearMotor.setPower(power);
-        rightRearMotor.setPower(power);*/
+        rightRearMotor.setPower(power);
     }
 
     private void moveStraight(float rotations, double power) {
