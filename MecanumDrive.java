@@ -77,19 +77,26 @@ public class MecanumDrive extends OpMode {
             LF = 0; RF = 0; LR = 0; RR = 0;
 
             // Get joystick values
-            Y1 = -gamepad1.right_stick_y * joyScale; // invert so up is positive
-            X1 = gamepad1.right_stick_x * joyScale;
-            Y2 = -gamepad1.left_stick_y * joyScale; // Y2 is not used at present
-            X2 = gamepad1.left_stick_x * joyScale;
+            Y1 = gamepad1.left_stick_y * joyScale; // invert so up is positive
+            X1 = -gamepad1.left_stick_x * joyScale;
+            Y2 = -gamepad1.right_stick_y * joyScale; // Y2 is not used at present
+            X2 = gamepad1.right_stick_x * joyScale;
 
             // Forward/back movement
-            LF += Y1; RF += Y1; LR += Y1; RR += Y1;
-
+            LF += Y1;
+            RF += Y1;
+            LR += Y1;
+            RR += Y1;
             // Side to side movement
-            LF += X1; RF -= X1; LR -= X1; RR += X1;
-
+            LF += X1;
+            RF -= X1;
+            LR -= X1;
+            RR += X1;
             // Rotation movement
-            LF += X2; RF -= X2; LR += X2; RR -= X2;
+            LF += X2;
+            RF -= X2;
+            LR += X2;
+            RR -= X2;
 
             // Clip motor power values to +-motorMax
             LF = Math.max(-motorMax, Math.min(LF, motorMax));
@@ -108,13 +115,6 @@ public class MecanumDrive extends OpMode {
             telemetry.addData("RF", "%.3f", RF);
             telemetry.addData("LR", "%.3f", LR);
             telemetry.addData("RR", "%.3f", RR);
-
-                telemetry.addData("encoder-fwd", leftFrontMotor.getCurrentPosition() + "  busy=" + rightFrontMotor.isBusy());
-                telemetry.addData("encoder-fwd", leftRearMotor.getCurrentPosition() + "  busy=" + leftRearMotor.isBusy());
-                telemetry.addData("encoder-fwd", rightFrontMotor.getCurrentPosition() + "  busy=" + rightFrontMotor.isBusy());
-                telemetry.addData("encoder-fwd", leftRearMotor.getCurrentPosition() + "  busy=" + rightRearMotor.isBusy());
-                telemetry.update();
-                //idle();
 
         }
     }
