@@ -1,14 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Autonomous(name = "MecanumFang", group = "Auto")
-public class MecanumFang extends LinearOpMode {
+@Autonomous(name = "MecanumFangBlue", group = "Auto")
+public class MecanumFangBlue extends LinearOpMode {
 
     DcMotor leftFrontMotor = null;
     DcMotor rightFrontMotor = null;
@@ -35,6 +33,7 @@ public class MecanumFang extends LinearOpMode {
         rightFrontMotor.setDirection(DcMotor.Direction.REVERSE);
         leftRearMotor.setDirection(DcMotor.Direction.FORWARD);
         rightRearMotor.setDirection(DcMotor.Direction.REVERSE);
+        claw.setDirection(Servo.Direction.REVERSE);
 
         liftMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -52,7 +51,6 @@ public class MecanumFang extends LinearOpMode {
         leftFang.setPosition(0);
         rightFang.setPosition(1);
 
-        liftMotor.setPower(0.4);
         claw.setPosition(0.7);
 
         //go forward
@@ -60,7 +58,7 @@ public class MecanumFang extends LinearOpMode {
         rightFrontMotor.setPower(0.6);
         leftRearMotor.setPower(0.6);
         rightRearMotor.setPower(0.6);
-        sleep(1000);
+        sleep(900);
 
         leftFrontMotor.setPower(0.0);
         rightFrontMotor.setPower(0.0);
@@ -69,11 +67,11 @@ public class MecanumFang extends LinearOpMode {
         sleep(500);
 
         //go sideways to align with foundation
-        leftFrontMotor.setPower(-0.6);
-        rightFrontMotor.setPower(-0.6);
-        leftRearMotor.setPower(0.6);
-        rightRearMotor.setPower(0.6);
-        sleep(200);
+        leftFrontMotor.setPower(0.6);
+        rightFrontMotor.setPower(0.6);
+        leftRearMotor.setPower(-0.6);
+        rightRearMotor.setPower(-0.6);
+        sleep(300);
 
         leftFrontMotor.setPower(0.0);
         rightFrontMotor.setPower(0.0);
@@ -86,7 +84,7 @@ public class MecanumFang extends LinearOpMode {
         rightFrontMotor.setPower(0.6);
         leftRearMotor.setPower(0.6);
         rightRearMotor.setPower(0.6);
-        sleep(500);
+        sleep(400);
 
         leftFrontMotor.setPower(0.0);
         rightFrontMotor.setPower(0.0);
@@ -101,28 +99,28 @@ public class MecanumFang extends LinearOpMode {
         sleep(500);
 
         //pull foundation back
-        leftFrontMotor.setPower(-0.6);
-        rightFrontMotor.setPower(-0.8);
-        leftRearMotor.setPower(-0.6);
-        rightRearMotor.setPower(-0.8);
-        sleep(2800);
+        leftFrontMotor.setPower(-0.8);
+        rightFrontMotor.setPower(-0.6);
+        leftRearMotor.setPower(-0.8);
+        rightRearMotor.setPower(-0.6);
+        sleep(2600);
 
         leftFrontMotor.setPower(0);
         rightFrontMotor.setPower(0);
         leftRearMotor.setPower(0);
         rightRearMotor.setPower(0);
         sleep(400);
-
-        leftFrontMotor.setPower(0.6);
-        rightFrontMotor.setPower(0.6);
-        leftRearMotor.setPower(0.6);
-        rightRearMotor.setPower(0.6);
-        sleep(1800);
 
         leftFang.setPosition(0);
         rightFang.setPosition(1);
-        liftMotor.setPower(0);
-        sleep(200);
+
+        leftFrontMotor.setPower(-0.6);
+        rightFrontMotor.setPower(-0.6);
+        leftRearMotor.setPower(0.6);
+        rightRearMotor.setPower(0.6);
+        sleep(2050);
+
+        liftMotor.setPower(0.0);
 
         leftFrontMotor.setPower(0);
         rightFrontMotor.setPower(0);
@@ -130,14 +128,17 @@ public class MecanumFang extends LinearOpMode {
         rightRearMotor.setPower(0);
         sleep(400);
 
-        leftFrontMotor.setPower(-0.6);
-        rightFrontMotor.setPower(-0.6);
-        leftRearMotor.setPower(-0.6);
-        rightRearMotor.setPower(-0.6);
-        sleep(2000);
+        leftFrontMotor.setPower(0.4);
+        rightFrontMotor.setPower(0.4);
+        leftRearMotor.setPower(0.4);
+        rightRearMotor.setPower(0.4);
+        sleep(100);
 
-        liftMotor.setPower(0.0);
-
+        leftFrontMotor.setPower(0);
+        rightFrontMotor.setPower(0);
+        leftRearMotor.setPower(0);
+        rightRearMotor.setPower(0);
+        sleep(400);
 
     }
 }

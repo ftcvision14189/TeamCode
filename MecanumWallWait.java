@@ -43,7 +43,8 @@ import com.qualcomm.robotcore.hardware.Servo;
             telemetry.update();
 
             // set both motors to 25% power.
-            sleep(23000);
+
+            sleep(18000);
             leftFrontMotor.setPower(-0.6);
             rightFrontMotor.setPower(-0.6);
             leftRearMotor.setPower(-0.6);

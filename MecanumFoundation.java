@@ -86,7 +86,7 @@ public class MecanumFoundation extends LinearOpMode {
         rightFrontMotor.setPower(0.6);
         leftRearMotor.setPower(0.6);
         rightRearMotor.setPower(0.6);
-        sleep(700);
+        sleep(500);
 
         leftFrontMotor.setPower(0.0);
         rightFrontMotor.setPower(0.0);
@@ -107,16 +107,16 @@ public class MecanumFoundation extends LinearOpMode {
         rightRearMotor.setPower(-0.6);
         sleep(2300);
 
-        leftFang.setPosition(0);
-        rightFang.setPosition(1);
-        liftMotor.setPower(0);
-        sleep(500);
-
         leftFrontMotor.setPower(0);
         rightFrontMotor.setPower(0);
         leftRearMotor.setPower(0);
         rightRearMotor.setPower(0);
         sleep(400);
+
+        leftFang.setPosition(0);
+        rightFang.setPosition(1);
+        liftMotor.setPower(0);
+        sleep(500);
 
         liftMotor.setPower(0.0);
 
@@ -125,7 +125,7 @@ public class MecanumFoundation extends LinearOpMode {
         rightFrontMotor.setPower(0.6);
         leftRearMotor.setPower(-0.6);
         rightRearMotor.setPower(-0.6);
-        sleep(1900);
+        sleep(2200);
 
         leftFrontMotor.setPower(0);
         rightFrontMotor.setPower(0);

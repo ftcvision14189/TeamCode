@@ -1,18 +1,16 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-@TeleOp(name="Mecanum", group="Linear Opmode") // @Autonomous(...) is the other common choice
+@TeleOp(name="StoneRunOP", group="Linear Opmode") // @Autonomous(...) is the other common choice
 
-public class Mecanum extends LinearOpMode {
+public class StoneRunOP extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
@@ -20,8 +18,8 @@ public class Mecanum extends LinearOpMode {
     DcMotor rightFrontMotor = null;
     DcMotor leftRearMotor = null;
     DcMotor rightRearMotor = null;
-    DcMotor liftMotor = null;
-    Servo claw = null;
+    DcMotor intakeLeft = null;
+    DcMotor intakeRight = null;
     Servo rightFang = null;
     Servo leftFang = null;
 
@@ -32,6 +30,8 @@ public class Mecanum extends LinearOpMode {
     double LF;
     double RR;
     double LR;
+    double IR;
+    double IL;
     // declare joystick position variables
     double X1;
     double Y1;
@@ -53,8 +53,8 @@ public class Mecanum extends LinearOpMode {
         rightFrontMotor = hardwareMap.dcMotor.get("rightFront");
         leftRearMotor = hardwareMap.dcMotor.get("leftRear");
         rightRearMotor = hardwareMap.dcMotor.get("rightRear");
-        liftMotor = hardwareMap.dcMotor.get("lift");
-        claw = hardwareMap.servo.get("claw");
+        intakeLeft = hardwareMap.dcMotor.get("intakeLeft");
+        intakeRight = hardwareMap.dcMotor.get("intakeRight");
         rightFang = hardwareMap.servo.get("rightServo");
         leftFang = hardwareMap.servo.get("leftServo");
 
@@ -66,16 +66,8 @@ public class Mecanum extends LinearOpMode {
         rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);
         leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
         rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
-        claw.setDirection(Servo.Direction.REVERSE);
+        intakeRight.setDirection(DcMotor.Direction.REVERSE);
 
-        telemetry.addData("Status", "Calibrating lift.");
-        telemetry.update();
-        liftMotor.setPower(0.05);
-        sleep(1000);
-        liftMotor.setPower(0);
-        liftMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        liftMotor.setTargetPosition(0);
-        liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // Set the drive motor run modes:
         // "RUN_USING_ENCODER" causes the motor to try to run at the specified fraction of full velocity
@@ -91,11 +83,6 @@ public class Mecanum extends LinearOpMode {
         telemetry.update();
         waitForStart();
         runtime.reset();
-        double clawPos;
-        float liftSpeed = 40;
-        int liftPos;
-
-        int LIFT_MAX = 1635;
 
         boolean slowmode = false;
         boolean wasYPressed = false;
@@ -135,16 +122,16 @@ public class Mecanum extends LinearOpMode {
             // Get joystick value
             X1 = gamepad1.right_stick_x * joyScale;
             Y1 = gamepad1.left_stick_y * joyScale;
-            Z1 = Math.pow(gamepad1.left_stick_x * joyScale, 3);
-            Z2 = gamepad1.right_trigger;
-
-
+            //Z1 = Math.pow(gamepad1.left_stick_x * joyScale, 3);
+            Z1 = gamepad1.right_trigger;
+            Z2 = gamepad1.left_trigger;
+            
             // Forward movement
             LF += Y1; RF += Y1; LR += Y1; RR += Y1;
             // Right side movement
-            LF += Z1; RF += Z1; LR -= Z1; RR -= Z1;
+            LF += Z1; RF -= Z1; LR -= Z1; RR += Z1;
             // Left side movement
-            //LF += Z2; RF += Z2; LR -= Z2; RR -= Z2;
+            LF -= Z2; RF += Z2; LR += Z2; RR -= Z2;
             // Rotation movement
             LF -= X1; RF += X1; LR -= X1; RR += X1;
 
@@ -171,31 +158,10 @@ public class Mecanum extends LinearOpMode {
                 leftFang.setPosition(0.28);
             }
 
-            if (gamepad2.left_trigger > 0) {
-                clawPos = 0.7;
-            }
-            else {
-                clawPos = 0.12;
-            }
-
-            liftPos = Math.round(liftMotor.getTargetPosition() + (liftSpeed * -gamepad2.right_stick_y));
-            if (liftPos > LIFT_MAX) {
-                liftPos = LIFT_MAX;
-            }
-            else if (liftPos < 0) {
-                liftPos = 0;
-            }
-
-            liftMotor.setPower(0.8);
-
-
-
-
-
-
-
-            liftMotor.setTargetPosition(liftPos);
-            claw.setPosition(clawPos);
+            IL = gamepad2.right_stick_y * joyScale;
+            IR = gamepad2.right_stick_y * joyScale;
+            intakeLeft.setPower(IL);
+            intakeRight.setPower(IR);
 
             // Send some useful parameters to the driver station
             telemetry.addData("LF", "%.3f", LF);
@@ -203,7 +169,6 @@ public class Mecanum extends LinearOpMode {
             telemetry.addData("LR", "%.3f", LR);
             telemetry.addData("RR", "%.3f", RR);
             telemetry.addData("Fang: ", "left(%.2f), right (%.2f)", leftFang.getPosition(), rightFang.getPosition());
-            telemetry.addData("Lift: ", "position(%d)", liftMotor.getCurrentPosition());
             telemetry.update();
         }
     }
