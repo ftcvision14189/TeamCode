@@ -23,6 +23,7 @@ public class StoneRunOp extends LinearOpMode {
     DcMotor intakeRight = null;
     Servo rightFang = null;
     Servo leftFang = null;
+    Servo markerServo = null;
 
     boolean fang_open = false;
 
@@ -31,8 +32,11 @@ public class StoneRunOp extends LinearOpMode {
     double LF;
     double RR;
     double LR;
+
     double IR;
     double IL;
+
+    double capPower;
     // declare joystick position variables
     double X1;
     double Y1;
@@ -41,7 +45,7 @@ public class StoneRunOp extends LinearOpMode {
 
     // operational constants
     double joyScale = 0.8;
-    double intakeSpeed = 1;
+    double intakeSpeed = 0.5;
     double motorMax = 1; // Limit motor power to this value for Andymark RUN_USING_ENCODER mode
 
     @Override
@@ -59,6 +63,7 @@ public class StoneRunOp extends LinearOpMode {
         intakeRight = hardwareMap.dcMotor.get("intakeRight");
         rightFang = hardwareMap.servo.get("rightServo");
         leftFang = hardwareMap.servo.get("leftServo");
+        markerServo = hardwareMap.servo.get("capStone");
 
 
         // Set the drive motor direction:
@@ -87,6 +92,7 @@ public class StoneRunOp extends LinearOpMode {
 
         boolean slowmode = false;
         boolean wasYPressed = false;
+        boolean capstone_in = true;
 
 
         // run until the end of the match (driver presses STOP)
@@ -100,7 +106,7 @@ public class StoneRunOp extends LinearOpMode {
                 joyScale = 0.5;
                 telemetry.addData("Mode", "Slow");
             }
-            else if (gamepad1.right_trigger > 0){
+            else if (gamepad1.right_bumper){
                 joyScale = 1;
                 telemetry.addLine("I.");
                 telemetry.addLine("AM.");
@@ -149,13 +155,40 @@ public class StoneRunOp extends LinearOpMode {
             } else if ((gamepad2.b) && (!fang_open)) {
                 fang_open = true;
                 rightFang.setPosition(0.4);
-                leftFang.setPosition(0.28);
+                leftFang.setPosition(0.4);
             }
 
-            IL = gamepad2.right_stick_y * intakeSpeed;
-            IR = gamepad2.right_stick_y * intakeSpeed;
-            intakeLeft.setPower(IL);
-            intakeRight.setPower(IR);
+            /*if ((IL < 0) && (IR < 0)) {
+                intakeSpeed = 0.5;
+                intakeLeft.setPower(IL);
+                intakeRight.setPower(IR);
+            } else if ((IL > 0) && (IR > 0)) {
+                intakeSpeed = 1;
+                intakeLeft.setPower(IL);
+                intakeRight.setPower(IR);
+            }*/
+
+            if (gamepad2.right_stick_y < 0) {
+                IL = 0.35 * gamepad2.right_stick_y;
+                IR = 0.35 * gamepad2.right_stick_y;
+                intakeLeft.setPower(IL);
+                intakeRight.setPower(IR);
+            }
+            else {
+                IL = gamepad2.right_stick_y;
+                IR = gamepad2.right_stick_y;
+                intakeLeft.setPower(IL);
+                intakeRight.setPower(IR);
+            }
+
+
+            if ((gamepad2.right_trigger > 0) && (capstone_in)) {
+                capstone_in = false;
+                markerServo.setPosition(0.75);
+            } else if ((gamepad2.right_trigger == 0) && (!capstone_in)) {
+                capstone_in = true;
+                markerServo.setPosition(0);
+            }
 
             // Send some useful parameters to the driver station
             telemetry.addData("LF", "%.3f", LF);

@@ -14,7 +14,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 public class StoneAuto {
 
-    @Autonomous(name = "MecanumWallPark", group = "Auto")
+    @Autonomous(name = "ParkingAuto", group = "Auto")
    // @Disabled
     public class MecanumWallPark extends LinearOpMode {
 
@@ -26,6 +26,7 @@ public class StoneAuto {
         DcMotor intakeRight = null;
         private Servo leftFang = null;
         private Servo rightFang = null;
+        private Servo markerServo = null;
 
 
         // called when init button is  pressed.
@@ -40,6 +41,7 @@ public class StoneAuto {
             rightFang = hardwareMap.servo.get("rightServo");
             intakeRight = hardwareMap.dcMotor.get("intakeRight");
             intakeLeft = hardwareMap.dcMotor.get("intakeLeft");
+            markerServo = hardwareMap.servo.get("capStone");
 
 
             leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
