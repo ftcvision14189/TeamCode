@@ -123,6 +123,7 @@ public class StoneRunOp extends LinearOpMode {
             // Get joystick value
             X1 = gamepad1.right_stick_x * joyScale;
             Y1 = gamepad1.left_stick_y * joyScale;
+            //Z1 = Math.pow(gamepad1.left_stick_x * joyScale, 3);
             Z1 = gamepad1.right_trigger;
             Z2 = gamepad1.left_trigger;
 
