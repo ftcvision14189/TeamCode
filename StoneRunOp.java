@@ -24,6 +24,7 @@ public class StoneRunOp extends LinearOpMode {
     Servo rightFang = null;
     Servo leftFang = null;
     Servo markerServo = null;
+    Servo tapePark = null;
 
     boolean fang_open = false;
 
@@ -45,7 +46,6 @@ public class StoneRunOp extends LinearOpMode {
 
     // operational constants
     double joyScale = 0.8;
-    double intakeSpeed = 0.5;
     double motorMax = 1; // Limit motor power to this value for Andymark RUN_USING_ENCODER mode
 
     @Override
@@ -64,6 +64,7 @@ public class StoneRunOp extends LinearOpMode {
         rightFang = hardwareMap.servo.get("rightServo");
         leftFang = hardwareMap.servo.get("leftServo");
         markerServo = hardwareMap.servo.get("capStone");
+        tapePark = hardwareMap.servo.get("tapePark");
 
 
         // Set the drive motor direction:
@@ -180,6 +181,8 @@ public class StoneRunOp extends LinearOpMode {
                 capstone_in = true;
                 markerServo.setPosition(0);
             }
+
+            tapePark.setPosition(gamepad2.left_stick_y);
 
             // Send some useful parameters to the driver station
             telemetry.addData("LF", "%.3f", LF);
