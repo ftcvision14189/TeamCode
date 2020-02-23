@@ -68,7 +68,6 @@ public class StoneRunOp extends LinearOpMode {
         rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);
         leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
         rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
-        intakeRight.setDirection(DcMotor.Direction.REVERSE);
 
 
         // Set the drive motor run modes:
@@ -122,13 +121,13 @@ public class StoneRunOp extends LinearOpMode {
             Z2 = gamepad1.left_trigger;
 
             // Forward movement
-            LF += Y1; RF += Y1; LR += Y1; RR += Y1;
+            LF -= Y1; RF -= Y1; LR -= Y1; RR -= Y1;
             // Right side movement
             LF += Z1; RF -= Z1; LR -= Z1; RR += Z1;
             // Left side movement
             LF -= Z2; RF += Z2; LR += Z2; RR -= Z2;
             // Rotation movement
-            LF -= X1; RF += X1; LR -= X1; RR += X1;
+            LF += X1; RF -= X1; LR += X1; RR -= X1;
 
             // Clip motor power values to +-motorMax
             LF = Math.max(-motorMax, Math.min(LF, motorMax));
