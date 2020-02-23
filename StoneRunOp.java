@@ -158,15 +158,6 @@ public class StoneRunOp extends LinearOpMode {
                 leftFang.setPosition(0.4);
             }
 
-            /*if ((IL < 0) && (IR < 0)) {
-                intakeSpeed = 0.5;
-                intakeLeft.setPower(IL);
-                intakeRight.setPower(IR);
-            } else if ((IL > 0) && (IR > 0)) {
-                intakeSpeed = 1;
-                intakeLeft.setPower(IL);
-                intakeRight.setPower(IR);
-            }*/
 
             if (gamepad2.right_stick_y < 0) {
                 IL = 0.35 * gamepad2.right_stick_y;
@@ -175,8 +166,8 @@ public class StoneRunOp extends LinearOpMode {
                 intakeRight.setPower(IR);
             }
             else {
-                IL = gamepad2.right_stick_y;
-                IR = gamepad2.right_stick_y;
+                IL = 0.5 * gamepad2.right_stick_y;
+                IR = 0.5 * gamepad2.right_stick_y;
                 intakeLeft.setPower(IL);
                 intakeRight.setPower(IR);
             }
