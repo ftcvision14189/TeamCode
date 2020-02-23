@@ -77,14 +77,8 @@ public class StoneRunOp extends LinearOpMode {
         while (opModeIsActive()) {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
 
-            if (gamepad1.y && !wasYPressed){
-                slowmode = !slowmode;
-                wasYPressed = true;
-            }
-
-            else if (!gamepad1.y) {
-                wasYPressed = false;
-            }
+            slowmode = (gamepad1.y && !wasYPressed);
+            wasYPressed = gamepad1.y;
 
             if (slowmode) {
                 joyScale = slowModeSpeed;
