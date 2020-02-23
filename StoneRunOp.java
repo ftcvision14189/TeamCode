@@ -41,6 +41,7 @@ public class StoneRunOp extends LinearOpMode {
 
     // operational constants
     double joyScale = 0.8;
+    double intakeSpeed = 1;
     double motorMax = 1; // Limit motor power to this value for Andymark RUN_USING_ENCODER mode
 
     @Override
@@ -152,8 +153,8 @@ public class StoneRunOp extends LinearOpMode {
                 leftFang.setPosition(0.28);
             }
 
-            IL = gamepad2.right_stick_y * joyScale;
-            IR = gamepad2.right_stick_y * joyScale;
+            IL = gamepad2.right_stick_y * intakeSpeed;
+            IR = gamepad2.right_stick_y * intakeSpeed;
             intakeLeft.setPower(IL);
             intakeRight.setPower(IR);
 
