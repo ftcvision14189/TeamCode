@@ -3,60 +3,77 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 
-@TeleOp(name="StoneRunOP", group="Linear Opmode")
+@TeleOp(name="StoneRunOP", group="Linear Opmode") // @Autonomous(...) is the other common choice
 
 public class StoneRunOp extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
-    DcMotor leftFrontMotor;
-    DcMotor rightFrontMotor;
-    DcMotor leftRearMotor;
-    DcMotor rightRearMotor;
+    DcMotor leftFrontMotor = null;
+    DcMotor rightFrontMotor = null;
+    DcMotor leftRearMotor = null;
+    DcMotor rightRearMotor = null;
+    DcMotor intakeLeft = null;
+    DcMotor intakeRight = null;
+    Servo rightFang = null;
+    Servo leftFang = null;
+
+    boolean fang_open = false;
+
+    // declare motor speed variables
+    double RF;
+    double LF;
+    double RR;
+    double LR;
+    double IR;
+    double IL;
+    // declare joystick position variables
+    double X1;
+    double Y1;
+    double Z1;
+    double Z2;
+
+    // operational constants
+    double joyScale = 0.8;
+    double motorMax = 1; // Limit motor power to this value for Andymark RUN_USING_ENCODER mode
 
     @Override
     public void runOpMode() {
 
+        /* Initialize the hardware variables. Note that the strings used here as parameters
+         * to 'get' must correspond to the names assigned during the robot configuration
+         * step (using the FTC Robot Controller app on the phone).
+         */
         leftFrontMotor = hardwareMap.dcMotor.get("leftFront");
         rightFrontMotor = hardwareMap.dcMotor.get("rightFront");
         leftRearMotor = hardwareMap.dcMotor.get("leftRear");
         rightRearMotor = hardwareMap.dcMotor.get("rightRear");
-        DcMotor intakeLeft = hardwareMap.dcMotor.get("intakeLeft");
-        DcMotor intakeRight = hardwareMap.dcMotor.get("intakeRight");
-        Servo rightFang = hardwareMap.servo.get("rightServo");
-        Servo leftFang = hardwareMap.servo.get("leftServo");
-        Servo capper = hardwareMap.servo.get("capStone");
+        intakeLeft = hardwareMap.dcMotor.get("intakeLeft");
+        intakeRight = hardwareMap.dcMotor.get("intakeRight");
+        rightFang = hardwareMap.servo.get("rightServo");
+        leftFang = hardwareMap.servo.get("leftServo");
 
-        // declare motor speed variables
-        double RF;
-        double LF;
-        double RR;
-        double LR;
-        double IR;
-        double IL;
 
-        // declare joystick position variables
-        double X1;
-        double X2;
-        double Y1;
+        // Set the drive motor direction:
+        // "Reverse" the motor that runs backwards when connected directly to the battery
+        // These polarities are for the Neverest 20 motors
+        leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
+        rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);
+        leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
+        rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
+        intakeRight.setDirection(DcMotor.Direction.REVERSE);
 
-        // operational constants
-        double joyScale;
-        double slowModeSpeed = 0.3;
-        double normalSpeed = 0.5;
-        double speedSpeed = 1;
-        double motorMax = 1; // Limit motor power to this value for Andymark RUN_USING_ENCODER mode
 
-        leftFrontMotor.setDirection(DcMotor.Direction.FORWARD);
-        rightFrontMotor.setDirection(DcMotor.Direction.REVERSE);
-        leftRearMotor.setDirection(DcMotor.Direction.FORWARD);
-        rightRearMotor.setDirection(DcMotor.Direction.REVERSE);
-
+        // Set the drive motor run modes:
+        // "RUN_USING_ENCODER" causes the motor to try to run at the specified fraction of full velocity
+        // Note: We were not able to make this run mode work until we switched Channel A and B encoder wiring into
+        // the motor controllers. (Neverest Channel A connects to MR Channel B input, and vice versa.)
         leftFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -70,8 +87,7 @@ public class StoneRunOp extends LinearOpMode {
 
         boolean slowmode = false;
         boolean wasYPressed = false;
-        boolean capstone_in = true;
-        boolean fang_open = true;
+
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
@@ -87,17 +103,17 @@ public class StoneRunOp extends LinearOpMode {
             }
 
             if (slowmode) {
-                joyScale = slowModeSpeed;
+                joyScale = 0.5;
                 telemetry.addData("Mode", "Slow");
             }
             else if (gamepad1.right_trigger > 0){
-                joyScale = speedSpeed;
+                joyScale = 1;
                 telemetry.addLine("I.");
                 telemetry.addLine("AM.");
                 telemetry.addLine("SPEED.");
             }
             else {
-                joyScale = normalSpeed;
+                joyScale = 0.8;
                 telemetry.addData("Mode", "Normal");
             }
 
@@ -106,13 +122,17 @@ public class StoneRunOp extends LinearOpMode {
 
             // Get joystick value
             X1 = gamepad1.right_stick_x * joyScale;
-            X2 = gamepad1.left_stick_x * joyScale;
             Y1 = gamepad1.left_stick_y * joyScale;
+            //Z1 = Math.pow(gamepad1.left_stick_x * joyScale, 3);
+            Z1 = gamepad1.right_trigger;
+            Z2 = gamepad1.left_trigger;
 
             // Forward movement
             LF += Y1; RF += Y1; LR += Y1; RR += Y1;
-            // Strafe movement
-            LF += X2; RF -= X2; LR -= X2; RR += X2;
+            // Right side movement
+            LF += Z1; RF -= Z1; LR -= Z1; RR += Z1;
+            // Left side movement
+            LF -= Z2; RF += Z2; LR += Z2; RR -= Z2;
             // Rotation movement
             LF -= X1; RF += X1; LR -= X1; RR += X1;
 
@@ -131,22 +151,13 @@ public class StoneRunOp extends LinearOpMode {
             //Toggle Fang Position when Y is pressed on gamepad1
             if ((gamepad2.y) && (fang_open)) {
                 fang_open = false;
-                rightFang.setPosition(0.5);
-                leftFang.setPosition(0.5);
+                rightFang.setPosition(1);
+                leftFang.setPosition(0);
             } else if ((gamepad2.b) && (!fang_open)) {
                 fang_open = true;
-                rightFang.setPosition(0);
-                leftFang.setPosition(0);
+                rightFang.setPosition(0.4);
+                leftFang.setPosition(0.28);
             }
-
-            if ((gamepad2.right_trigger > 0) && (capstone_in)) {
-                capstone_in = false;
-                capper.setPosition(0.75);
-            } else if ((gamepad2.right_trigger == 0) && (!capstone_in)) {
-                capstone_in = true;
-                capper.setPosition(0);
-            }
-
 
             IL = gamepad2.right_stick_y * joyScale;
             IR = gamepad2.right_stick_y * joyScale;

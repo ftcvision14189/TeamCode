@@ -60,7 +60,13 @@ public class StoneAuto {
             telemetry.update();
 
             // set both motors to 25% power.
+            strafe(5,0.25);
+            strafe(-5,0.25);
             moveStraight(5, 0.25);
+            moveStraight(-5, 0.25);
+            rotate(5,0.25);
+            rotate(-5,0.25);
+
         }
 
         // Define movement functions
