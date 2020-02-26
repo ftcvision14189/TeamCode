@@ -3,15 +3,13 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
+@TeleOp(name="JoystickOp", group="Linear Opmode")
 
-@TeleOp(name="TriggerOp", group="Linear Opmode")
-
-public class StoneRunOP extends LinearOpMode {
+public class StoneRunJoystick extends LinearOpMode {
 
     /* Declare OpMode members. */
     private ElapsedTime runtime = new ElapsedTime();
@@ -40,16 +38,17 @@ public class StoneRunOP extends LinearOpMode {
     double capPower;
     // declare joystick position variables
     double X1;
+    double X2;
     double Y1;
     double Z1;
     double Z2;
 
     // operational constants
-    double joyScale = 0.8;
     double slowSpeed = 0.3;
-    double normalSpeed = 0.8;
+    double normalSpeed = 0.6;
     double speedSpeed = 1;
     double motorMax = 1;
+    double joyScale = normalSpeed;
 
     @Override
     public void runOpMode() {
@@ -91,11 +90,11 @@ public class StoneRunOP extends LinearOpMode {
         while (opModeIsActive()) {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
 
-            if (gamepad1.y && !wasYPressed) {
+            if (gamepad1.left_bumper && !wasYPressed) {
                 slowmode = !slowmode;
             }
 
-            wasYPressed = gamepad1.y;
+            wasYPressed = gamepad1.left_bumper;
 
             if (slowmode) {
                 joyScale = slowSpeed;
@@ -117,16 +116,13 @@ public class StoneRunOP extends LinearOpMode {
 
             // Get joystick value
             X1 = gamepad1.right_stick_x * joyScale;
+            X2 = gamepad1.left_stick_x * joyScale;
             Y1 = gamepad1.left_stick_y * joyScale;
-            Z1 = gamepad1.right_trigger * joyScale;
-            Z2 = gamepad1.left_trigger * joyScale;
 
             // Forward movement
             LF -= Y1; RF -= Y1; LR -= Y1; RR -= Y1;
-            // Right side movement
-            LF += Z1; RF -= Z1; LR -= Z1; RR += Z1;
-            // Left side movement
-            LF -= Z2; RF += Z2; LR += Z2; RR -= Z2;
+            // Strafe movement
+            LF += X2; RF -= X2; LR -= X2; RR += X2;
             // Rotation movement
             LF += X1; RF -= X1; LR += X1; RR -= X1;
 
