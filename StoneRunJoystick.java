@@ -22,7 +22,7 @@ public class StoneRunJoystick extends LinearOpMode {
     Servo rightFang = null;
     Servo leftFang = null;
     Servo markerServo = null;
-    Servo tapePark = null;
+    DcMotor tapePark = null;
 
     boolean fang_open = false;
 
@@ -62,7 +62,7 @@ public class StoneRunJoystick extends LinearOpMode {
         rightFang = hardwareMap.servo.get("rightServo");
         leftFang = hardwareMap.servo.get("leftServo");
         markerServo = hardwareMap.servo.get("capStone");
-        tapePark = hardwareMap.servo.get("tapePark");
+        tapePark = hardwareMap.dcMotor.get("tapePark");
 
 
         leftFrontMotor.setDirection(DcMotor.Direction.REVERSE);
@@ -172,7 +172,7 @@ public class StoneRunJoystick extends LinearOpMode {
                 markerServo.setPosition(0);
             }
 
-            tapePark.setPosition(gamepad2.left_stick_y);
+            tapePark.setPower(gamepad2.left_stick_y);
 
             // Send some useful parameters to the driver station
             telemetry.addData("LF", "%.3f", LF);
