@@ -70,12 +70,13 @@ public class StoneRunOP extends LinearOpMode {
         rightFrontMotor.setDirection(DcMotor.Direction.FORWARD);
         leftRearMotor.setDirection(DcMotor.Direction.REVERSE);
         rightRearMotor.setDirection(DcMotor.Direction.FORWARD);
+        intakeRight.setDirection(DcMotor.Direction.REVERSE);
 
 
-        leftFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+       /* leftFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rightFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         leftRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        rightRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        rightRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);*/
 
 
         telemetry.addData("Status", "Waiting for start.");
@@ -145,12 +146,12 @@ public class StoneRunOP extends LinearOpMode {
             //Toggle Fang Position when Y is pressed on gamepad1
             if ((gamepad2.y) && (fang_open)) {
                 fang_open = false;
-                rightFang.setPosition(1);
-                leftFang.setPosition(0);
-            } else if ((gamepad2.b) && (!fang_open)) {
-                fang_open = true;
                 rightFang.setPosition(0.4);
                 leftFang.setPosition(0.4);
+            } else if ((gamepad2.b) && (!fang_open)) {
+                fang_open = true;
+                rightFang.setPosition(1);
+                leftFang.setPosition(0);
             }
 
 

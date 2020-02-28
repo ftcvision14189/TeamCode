@@ -15,7 +15,7 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 public class StoneAuto {
 
     @Autonomous(name = "ParkingAuto", group = "Auto")
-   // @Disabled
+    @Disabled
     public class MecanumWallPark extends LinearOpMode {
 
         DcMotor leftFrontMotor = null;
